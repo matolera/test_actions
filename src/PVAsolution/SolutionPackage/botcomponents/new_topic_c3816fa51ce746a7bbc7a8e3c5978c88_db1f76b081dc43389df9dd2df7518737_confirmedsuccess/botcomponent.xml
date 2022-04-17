@@ -1,0 +1,8 @@
+<botcomponent schemaname="new_topic_c3816fa51ce746a7bbc7a8e3c5978c88_db1f76b081dc43389df9dd2df7518737_confirmedsuccess">
+  <componenttype>0</componenttype>
+  <description>System Intent Confirmed Success</description>
+  <iscustomizable>1</iscustomizable>
+  <name>Confirmed Success</name>
+  <statecode>0</statecode>
+  <statuscode>1</statuscode>
+</botcomponent>
