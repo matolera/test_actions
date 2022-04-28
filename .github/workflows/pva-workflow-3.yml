@@ -1,61 +1,62 @@
-name: trigger-deploy-tagged-solution
+name: pva-workflow-3
+
 on:
   workflow_dispatch:
     inputs:
-      tag:
-        required: true
-        description: "GitHub tag for solution-version to deploy"
       environment:
+        description: "GitHub environment name to import the solution"
         required: true
-        description: "GitHub environment name to deploy to"
-        default: prod
+        default: "DEV"
+
 env:
   workflow_scripts_path: .github/workflows/scripts
 
 jobs:
-  trigger-deploy-tagged-solution:
+  delete-and-import-unmanaged-solution:
     runs-on: ubuntu-latest
-    steps:      
+    environment: ${{ github.event.inputs.environment }}
+    steps:
       - uses: actions/checkout@v2
-      - name: deploy-tagged-solution-to-environment
-        id:  deploy-tagged-solution-to-environment
-        uses: actions/github-script@v5  
+      - name: delete-and-import-unmanaged-solution
+        id: delete-and-import-unmanaged-solution
+        uses: actions/github-script@v5
         with:
-          # Workflows cannot be dispatched with the standard GITHUB_TOKEN, so we use a token that can
           github-token: ${{secrets.WORKFLOW_DISPATCH_TOKEN}}
           script: |
             await github.rest.actions.createWorkflowDispatch({
               owner: context.repo.owner,
               repo: context.repo.repo,
-              workflow_id: 'deploy-tagged-solution-to-environment.yml',
+              workflow_id: 'delete-and-import-unmanaged-solution.yml',
               ref: '${{ github.ref }}',
               inputs: {
-                tag: '${{ github.event.inputs.tag }}',
-                environment: '${{ github.event.inputs.environment }}'
+                solution_name: '${{ secrets.SOLUTION_NAME }}',
+                environment_url: '${{ secrets.ENVIRONMENT_URL }}',
+                ref: '${{ secrets.BRANCH_TO_CREATE }}'
               }
             })
-      - name: check-workflow-status
-        id: check-workflow-status
+
+      - name: check-delete-and-import-unmanaged-solution-workflow-status
+        id: check-delete-and-import-unmanaged-solution-workflow-status
         uses: actions/github-script@v5
         with:
           script: |
-            let sleep = require('${{ env.workflow_scripts_path }}/js/test.js')
+            let sleep = require('${{ env.workflow_scripts_path }}/js/Sleep.js')
             let currentStatus = null;
             sleep(2000)
             do {
               let workflowLog = await github.rest.actions.listWorkflowRuns({
                 owner: context.repo.owner,
                 repo: context.repo.repo,
-                workflow_id: 'deploy-tagged-solution-to-environment.yml',
+                workflow_id: 'delete-and-import-unmanaged-solution.yml',
                 per_page: 1
               })
-              
+
               if (workflowLog.data.total_count > 0) {
                 currentStatus = workflowLog.data.workflow_runs[0].status
               }
               else {
                 break
               }
-              console.log('deploy-tagged-solution-to-environment status: ' + currentStatus)
+              console.log('delete-and-import-unmanaged-solution: ' + currentStatus)
               sleep(20000)
-            } while (currentStatus != 'completed'); 
+            } while (currentStatus != 'completed');

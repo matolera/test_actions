@@ -9,7 +9,7 @@ runs:
     # hack, but necessary until GitHub Actions for Power Platform support all pac commands
     - if: ${{ false }} # this will never run, but will force powerplatform-actions to download
       name: force-pac-download
-      uses: microsoft/powerplatform-actions/unpack-solution@v0
+      uses: microsoft/powerplatform-actions/unpack-solution@latest
       with:
         solution-file: fake.zip
         solution-folder: fake
@@ -30,7 +30,9 @@ runs:
 
         $pacPath = $array[0].Directory.FullName
         echo "pacPath: $pacPath"
+
         echo "::set-output name=pac_path::$pacPath"
+
     - if: ${{ always() }}
       id: set-pac-path
       name: set-pac-path

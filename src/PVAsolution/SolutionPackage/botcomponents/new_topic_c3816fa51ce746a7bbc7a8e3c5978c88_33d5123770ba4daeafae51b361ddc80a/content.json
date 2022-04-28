@@ -5,7 +5,8 @@
         "When are you closed",
         "When are you open",
         "Store hours",
-        "Daily open hours"
+        "Daily open hours",
+        "Test trigger"
       ],
       "dialogId": "new_topic_c3816fa51ce746a7bbc7a8e3c5978c88_33d5123770ba4daeafae51b361ddc80a",
       "isTriggeringEnabled": true,
@@ -13,7 +14,7 @@
       "displayName": "Lesson 1 - A simple topic",
       "description": "Lesson 1 - This lesson will show you how you can create a simple topic with one conditional branch.\n\nOver the next few lessons, we will show how to add and define variables, conditions and entities.\n\nWelcome to Power Virtual Agents!",
       "createdTime": "2019-01-15T00:00:00Z",
-      "updatedTime": "2022-04-14T17:13:26.4956598Z",
+      "updatedTime": "2022-04-19T15:42:31.4538113Z",
       "createdUserId": "user0",
       "updatedUserId": "2eb57154-3b52-4d3a-bb10-1b83d78c6b69"
     }
@@ -32,6 +33,12 @@
           "botMessageId": "614e2fa3-2cf0-42e3-a2eb-18f9fb274ee6",
           "nodeType": "BotMessageNode",
           "id": "1f6c0946-4d56-4714-96f5-15e2247e953b",
+          "defaultTargetNodeId": "126ed9ed-cfa0-4ee0-ab80-9c634eb35236"
+        },
+        {
+          "botMessageId": "0be96192-57c8-483e-9064-27162d856cdb",
+          "nodeType": "BotMessageNode",
+          "id": "126ed9ed-cfa0-4ee0-ab80-9c634eb35236",
           "defaultTargetNodeId": "6e127cd1-99ff-4c5e-8f3e-9ae93c0d4777"
         }
       ],
@@ -45,7 +52,7 @@
       "id": "new_topic_c3816fa51ce746a7bbc7a8e3c5978c88_33d5123770ba4daeafae51b361ddc80a",
       "displayName": "Dialog",
       "createdTime": "2019-01-15T00:00:00Z",
-      "updatedTime": "2022-04-14T17:13:26.4956598Z",
+      "updatedTime": "2022-04-19T15:42:31.4538113Z",
       "createdUserId": "user0",
       "updatedUserId": "2eb57154-3b52-4d3a-bb10-1b83d78c6b69"
     }
@@ -76,6 +83,19 @@
       "updatedTime": "2022-04-14T17:13:26.4956598Z",
       "createdUserId": "user0",
       "updatedUserId": "2eb57154-3b52-4d3a-bb10-1b83d78c6b69"
+    },
+    {
+      "channelContent": {
+        "web": {
+          "contentFormat": "Markdown",
+          "content": "New message added by a developer."
+        }
+      },
+      "id": "0be96192-57c8-483e-9064-27162d856cdb",
+      "createdTime": "2022-04-19T15:42:09.877Z",
+      "updatedTime": "2022-04-19T15:42:09.877Z",
+      "createdUserId": "user-0",
+      "updatedUserId": "user-0"
     }
   ]
 }

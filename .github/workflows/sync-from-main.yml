@@ -1,9 +1,9 @@
-name: sync-unmanaged-solution
+name: sync-from-main
 on:
   workflow_dispatch:
     inputs:
       from_branch:
-        description: "the ref(branch, commit, tag) that you want to import"
+        description: "The ref (branch, commit, tag) that you want to import"
         required: true
         default: main
       to_branch:
@@ -13,7 +13,7 @@ on:
 jobs:
   sync-branches:
     runs-on: ubuntu-latest
-    name: Syncing branches
+    name: Syncing from main branch
     steps:
       - name: Checkout
         uses: actions/checkout@v2
@@ -25,6 +25,7 @@ jobs:
         id: pull
         uses: tretuna/sync-branches@1.4.0
         with:
-          GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
+          GITHUB_TOKEN: ${{ secrets.WORKFLOW_DISPATCH_TOKEN }}
           FROM_BRANCH: ${{ github.event.inputs.from_branch }}
           TO_BRANCH: ${{ github.event.inputs.to_branch }}
+          PULL_REQUEST_TITLE: '[PR] ${{ github.event.inputs.from_branch }} into ${{ github.event.inputs.to_branch }}'
