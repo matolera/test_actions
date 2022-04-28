@@ -61,15 +61,6 @@ jobs:
           # will not fire.  Since this workflow pushes code to the remote repo, we use a token that can
           token: ${{ secrets.WORKFLOW_DISPATCH_TOKEN }}      
 
-      - name: Any Name Bash Test Step
-        shell: bash
-        run: |
-          echo "solution_name: ${{ github.event.inputs.solution_name }}"
-          echo "environment_url: ${{ github.event.inputs.environment_url }}"
-          echo "source_branch: ${{ github.event.inputs.source_branch }}"
-          echo "branch_to_create: ${{ github.event.inputs.branch_to_create }}"
-          echo "commit_message: ${{ github.event.inputs.commit_message }}"
-
       - name: create new git branch
         if: github.event.inputs.branch_to_create != ''
         run: |
