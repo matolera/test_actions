@@ -34,3 +34,5 @@ jobs:
             }
 
             sleep.createWorkflowDispatch(github, '${{ github.ref }}', context, params)
+
+            await sleep.otherMethod(github, context)
