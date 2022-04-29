@@ -33,6 +33,5 @@ jobs:
             }
 
             console.log('${{ github.ref }}')
-            console.log(context)
             console.log(params)
-            await sleep.createWorkflowDispatch(github, context, params)
+            await sleep.createWorkflowDispatch(${{ github }}, context, params)
