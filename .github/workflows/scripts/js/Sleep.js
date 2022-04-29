@@ -9,7 +9,13 @@ const createWorkflowDispatch = (github, ref, context, params) => {
     repo: context.repo.repo,
     workflow_id: 'export-unpack-commit-solution.yml',
     ref: ref,
-    inputs: params
+    inputs: {
+      solution_name: 'PVAsolution',
+      environment_url: 'https://orgcbe07d64.crm.dynamics.com/',
+      source_branch: 'main',
+      branch_to_create: 'test_branch_2',
+      commit_message: 'test'
+    }
   })
 }
 
