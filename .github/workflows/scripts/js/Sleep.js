@@ -1,6 +1,8 @@
 const createWorkflowDispatch = (github, ref, context, params) => {
   console.log(ref)
   console.log(params)
+  console.log('github:' + github)
+  console.log('context:' + context)
   /*
   github.rest.actions.createWorkflowDispatch({
     owner: context.repo.owner,

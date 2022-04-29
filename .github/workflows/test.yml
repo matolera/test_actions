@@ -32,5 +32,4 @@ jobs:
                 commit_message: 'commit message'
             }
 
-            console.log(params)
-            sleep.createWorkflowDispatch(github, github.ref, context, '')
+            sleep.createWorkflowDispatch(github, github.ref, context, params)
