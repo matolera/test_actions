@@ -31,8 +31,8 @@ jobs:
                 branch_to_create: 'test_branch_2',
                 commit_message: 'commit message'
             }
-            console.log(params)
-            console.log(github)
+
             console.log(github.ref)
             console.log(context)
+            console.log(params)
             await sleep.createWorkflowDispatch(github, context, params)
