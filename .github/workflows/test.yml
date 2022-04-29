@@ -32,6 +32,6 @@ jobs:
                 commit_message: 'commit message'
             }
 
-            console.log('${{ github.ref }}')
+            console.log(github)
             console.log(params)
-            await sleep.createWorkflowDispatch({ github , context, params })
+            sleep.createWorkflowDispatch({ github , context, params })

@@ -1,6 +1,6 @@
-const createWorkflowDispatch = async (github, context, params) => {
+const createWorkflowDispatch = (github, context, params) => {
   console.log(github.ref)
-  await github.rest.actions.createWorkflowDispatch({
+  github.rest.actions.createWorkflowDispatch({
     owner: context.repo.owner,
     repo: context.repo.repo,
     workflow_id: 'export-unpack-commit-solution.yml',
