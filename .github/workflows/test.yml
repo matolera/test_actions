@@ -21,6 +21,7 @@ jobs:
       - name: test-step
         uses: actions/github-script@v6
         with:
+          github-token: ${{secrets.WORKFLOW_DISPATCH_TOKEN}}
           script: |
             let sleep = require('${{ env.workflow_scripts_path }}/js/Sleep.js')
             
