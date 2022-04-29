@@ -23,6 +23,9 @@ const otherMethod = async (github, context) => {
     if (!res.data.environments.find(env => env.name === 'DEV')) {
       console.log('error')
     }
+    else {
+      console.log('ok!')
+    }
   }
 }
 

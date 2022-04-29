@@ -33,6 +33,6 @@ jobs:
                 commit_message: 'commit message'
             }
 
-            sleep.createWorkflowDispatch(github, '${{ github.ref }}', context, params)
+            //sleep.createWorkflowDispatch(github, '${{ github.ref }}', context, params)
 
             await sleep.otherMethod(github, context)
