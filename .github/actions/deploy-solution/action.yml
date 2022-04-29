@@ -75,7 +75,7 @@ runs:
     - name: import-solution-to-environment
       uses: microsoft/powerplatform-actions/import-solution@latest
       env:
-        import-as-holding: "${{ inputs.solution_action == 'upgrade' && false || true }}"
+        import_as_holding: "${{ inputs.solution_action == 'update' && false || true }}"
       with:
         environment-url: ${{ inputs.environment_url }}
         tenant-id: ${{ env.TENANT_ID }}
@@ -85,8 +85,8 @@ runs:
         force-overwrite: true
         use-deployment-settings-file: true
         deployment-settings-file: src/${{ inputs.solution_name }}/config/deploymentSettings.json
-        run-asynchronously: true
-        import-as-holding: ${{ env.import-as-holding }}
+        run-asynchronously: false
+        import-as-holding: ${{ env.import_as_holding }}
 
     - name: upgrade-solution
       if: ${{ inputs.solution_action == 'upgrade'}}
