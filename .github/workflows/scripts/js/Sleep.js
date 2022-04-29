@@ -4,8 +4,7 @@ const createWorkflowDispatch = (github, ref, context, params) => {
     owner: context.repo.owner,
     repo: context.repo.repo,
     workflow_id: 'export-unpack-commit-solution.yml',
-    ref: ref,
-    inputs: params
+    ref: ref
   })
 }
 
