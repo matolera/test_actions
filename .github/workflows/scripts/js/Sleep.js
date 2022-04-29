@@ -1,4 +1,4 @@
-const createWorkflowDispatch = async (github, params) => {
+const createWorkflowDispatch = async (github, context, params) => {
   console.log(github.ref)
   await github.rest.actions.createWorkflowDispatch({
     owner: context.repo.owner,
