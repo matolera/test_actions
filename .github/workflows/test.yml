@@ -38,7 +38,7 @@ jobs:
             let res = await sleep.otherMethod(github, context)
             
             if (res.data.environments.length > 0) {
-              if (!res.data.environments.find(env => env.name === github.event.inputs.environment)) {
+              if (!res.data.environments.find(env => env.name === 'DEV')) {
                 console.log('error')
               }
               else {
