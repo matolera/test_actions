@@ -23,9 +23,8 @@ inputs:
     description: "secrets"
     required: true
   solution_action:
-    description: "update or upgrade the solution"
+    description: "solution_action"
     required: true
-    default: "update"
 
 runs:
   using: "composite"
