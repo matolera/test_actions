@@ -16,7 +16,7 @@ function sleep(seconds) {
   } while (currentDate - date < (seconds * 1000));
 }
 
-module.exports = (milliseconds) => {
+module.exports = {
   method, 
   otherMethod
 }
