@@ -81,3 +81,4 @@ runs:
         use-deployment-settings-file: true
         deployment-settings-file: src/${{ inputs.solution_name }}/config/deploymentSettings.json
         run-asynchronously: true
+        import-as-holding: true
