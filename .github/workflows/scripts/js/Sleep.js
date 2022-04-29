@@ -25,7 +25,7 @@ const otherMethod = async (github, context) => {
     repo: context.repo.repo
   })
 
-  console.log(data)
+  console.log(data.environments)
 }
 
 function sleep(milliseconds) {
