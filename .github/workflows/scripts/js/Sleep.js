@@ -1,4 +1,4 @@
-const createWorkflowDispatch = (github, ref, context, params) => {
+const createWorkflowDispatch = ({ github, ref, context, params }) => {
   console.log(ref)
   console.log(params)
   console.log('github:' + github)
