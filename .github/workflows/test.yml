@@ -39,8 +39,13 @@ jobs:
 
             //sleep.createWorkflowDispatch(github, '${{ github.ref }}', context, params)
 
-            let res = await sleep.otherMethod(github, context)
-            
+            //let res = await sleep.otherMethod(github, context)
+        
+            let res = await github.rest.repos.getAllEnvironments({
+              owner: context.repo.owner,
+              repo: context.repo.repo
+            })
+
             if (res.data.environments.length > 0) {
               if (!res.data.environments.find(env => env.name === '${{ github.event.inputs.environment }}')) {
                 core.setFailed('environment does not exists')
