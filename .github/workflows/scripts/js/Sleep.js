@@ -7,16 +7,16 @@ const method = (param) => {
 const otherMethod = (param) => {
   // your method logic 
   console.log('other method')
-  sleep(2)
+  sleep(5000)
   console.log(param)
 }
 
-function sleep(seconds) {
+function sleep(milliseconds) {
   const date = Date.now();
   let currentDate = null;
   do {
     currentDate = Date.now();
-  } while (currentDate - date < (seconds * 1000));
+  } while (currentDate - date < milliseconds);
 }
 
 module.exports = {
