@@ -43,7 +43,7 @@ jobs:
             
             if (res.data.environments.length > 0) {
               if (!res.data.environments.find(env => env.name === '${{ github.event.inputs.environment }}')) {
-                console.log('error')
+                core.setFailed('environment does not exists')
               }
               else {
                 console.log('ok!')
