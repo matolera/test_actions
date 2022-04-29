@@ -10,6 +10,10 @@ on:
         description: "Solution mane"
         required: true
         default: "PVAsolution"
+      environment:
+        description: "Environment name"
+        required: true
+        default: "DEV"
 env:
   workflow_scripts_path: .github/workflows/scripts
 
@@ -38,7 +42,7 @@ jobs:
             let res = await sleep.otherMethod(github, context)
             
             if (res.data.environments.length > 0) {
-              if (!res.data.environments.find(env => env.name === 'DEV')) {
+              if (!res.data.environments.find(env => env.name === '${{ github.event.inputs.environment }}')) {
                 console.log('error')
               }
               else {
