@@ -20,12 +20,12 @@ const createWorkflowDispatch = (github, ref, context, params) => {
 }
 
 const otherMethod = async (github, context) => {
-  let data = await github.rest.repos.getAllEnvironments({
+  let res = await github.rest.repos.getAllEnvironments({
     owner: context.repo.owner,
     repo: context.repo.repo
   })
 
-  console.log(data)
+  console.log(res.data.environments)
 }
 
 function sleep(milliseconds) {
