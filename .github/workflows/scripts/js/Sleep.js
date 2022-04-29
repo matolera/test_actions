@@ -19,7 +19,11 @@ const otherMethod = async (github, context) => {
     repo: context.repo.repo
   })
 
-  console.log(res.data.environments)
+  if (res.data.environments.length > 0) {
+    if (!res.data.environments.find(env => env.name === 'DEV')) {
+      console.log('error')
+    }
+  }
 }
 
 function sleep(milliseconds) {
