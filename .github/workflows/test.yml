@@ -35,4 +35,13 @@ jobs:
 
             //sleep.createWorkflowDispatch(github, '${{ github.ref }}', context, params)
 
-            await sleep.otherMethod(github, context)
+            let res = await sleep.otherMethod(github, context)
+            
+            if (res.data.environments.length > 0) {
+              if (!res.data.environments.find(env => env.name === github.event.inputs.environment)) {
+                console.log('error')
+              }
+              else {
+                console.log('ok!')
+              }
+            }
