@@ -6,7 +6,7 @@ env:
   workflow_scripts_path: .github/workflows/scripts
 
 jobs:
-  test-job
+  test-job:
     runs-on: ubuntu-latest
     steps:
       - name: test-step
