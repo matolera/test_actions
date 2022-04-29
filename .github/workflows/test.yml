@@ -33,4 +33,4 @@ jobs:
             }
 
             console.log(params)
-            sleep.createWorkflowDispatch({ github, github.ref, context, params })
+            sleep.createWorkflowDispatch({ github, github.ref, context, '' })
