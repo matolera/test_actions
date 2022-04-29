@@ -65,8 +65,8 @@ jobs:
         uses: actions/github-script@v6
         with:
           script: |
-            //let sleep = require('${{ env.workflow_scripts_path }}/js/Sleep.js')
-            let sleep = require('sleep')
+            let sleep = require('${{ env.workflow_scripts_path }}/js/Sleep.js')
+            //let sleep = require('sleep')
             let currentStatus = null;
             let conclusion = null;
             sleep.sleep(2)
