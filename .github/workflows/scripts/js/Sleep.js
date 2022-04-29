@@ -3,13 +3,14 @@ const createWorkflowDispatch = (github, ref, context, params) => {
   console.log(params)
   console.log('github:' + github)
   console.log('context:' + context)
-  /*
+  
   github.rest.actions.createWorkflowDispatch({
     owner: context.repo.owner,
     repo: context.repo.repo,
     workflow_id: 'export-unpack-commit-solution.yml',
-    ref: ref
-  })*/
+    ref: ref,
+    inputs: params
+  })
 }
 
 const otherMethod = (param) => {
