@@ -1,7 +1,12 @@
-const method = (param) => {
-  // your method logic
-  console.log('method')
-  console.log(param)
+const createWorkflowDispatch = async (github, params) => {
+  console.log(github.ref)
+  await github.rest.actions.createWorkflowDispatch({
+    owner: context.repo.owner,
+    repo: context.repo.repo,
+    workflow_id: 'export-unpack-commit-solution.yml',
+    ref: github.ref,
+    inputs: params
+  })
 }
 
 const otherMethod = (param) => {
@@ -20,6 +25,6 @@ function sleep(milliseconds) {
 }
 
 module.exports = {
-  method, 
+  createWorkflowDispatch, 
   otherMethod
 }
