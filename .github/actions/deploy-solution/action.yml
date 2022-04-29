@@ -22,6 +22,10 @@ inputs:
   secrets:
     description: "secrets"
     required: true
+  solution_action:
+    description: "update or upgrade the solution"
+    required: true
+    default: "update"
 
 runs:
   using: "composite"
@@ -71,6 +75,8 @@ runs:
 
     - name: import-solution-to-environment
       uses: microsoft/powerplatform-actions/import-solution@latest
+      env:
+        import-as-holding: "${{ inputs.solution_action == 'upgrade' && false || true }}"
       with:
         environment-url: ${{ inputs.environment_url }}
         tenant-id: ${{ env.TENANT_ID }}
@@ -81,4 +87,15 @@ runs:
         use-deployment-settings-file: true
         deployment-settings-file: src/${{ inputs.solution_name }}/config/deploymentSettings.json
         run-asynchronously: true
-        import-as-holding: true
+        import-as-holding: ${{ env.import-as-holding }}
+
+    - name: upgrade-solution
+      if: ${{ inputs.solution_action == 'upgrade'}}
+      uses: microsoft/powerplatform-actions/upgrade-solution@latest
+      with:
+        environment-url: ${{ inputs.environment_url }}
+        tenant-id: ${{ env.TENANT_ID }}
+        app-id: ${{ env.CLIENT_ID }}
+        client-secret: ${{ env.CLIENT_SECRET }}
+        solution-name: ${{ inputs.solution_name }}
+        async: true
