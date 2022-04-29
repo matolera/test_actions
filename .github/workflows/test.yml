@@ -1,0 +1,17 @@
+name: test
+on:
+  workflow_dispatch:
+
+env:
+  workflow_scripts_path: .github/workflows/scripts
+
+jobs:
+  test-job
+    runs-on: ubuntu-latest
+    steps:
+      - name: test-step
+        uses: actions/github-script@v6
+        with:
+          script: |
+            let sleep = require('${{ env.workflow_scripts_path }}/js/Sleep.js')
+            sleep.otherMethod()
