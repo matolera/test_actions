@@ -1,11 +1,14 @@
-const method = () => {
+const method = (param) => {
   // your method logic
   console.log('method')
+  console.log(param)
 }
 
-const otherMethod = () => {
+const otherMethod = (param) => {
   // your method logic 
   console.log('other method')
+  sleep(2)
+  console.log(param)
 }
 
 function sleep(seconds) {

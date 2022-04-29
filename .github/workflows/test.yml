@@ -15,4 +15,5 @@ jobs:
         with:
           script: |
             let sleep = require('${{ env.workflow_scripts_path }}/js/Sleep.js')
-            sleep.otherMethod()
+            sleep.method('1')
+            sleep.otherMethod('2')
