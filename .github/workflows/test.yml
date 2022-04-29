@@ -1,7 +1,15 @@
 name: test
 on:
   workflow_dispatch:
-
+    inputs:
+      environment:
+        description: "GitHub environment name to get the solution"
+        required: true
+        default: "DEV"
+      solution_name:
+        description: "Solution mane"
+        required: true
+        default: "PVAsolution"
 env:
   workflow_scripts_path: .github/workflows/scripts
 
@@ -15,5 +23,9 @@ jobs:
         with:
           script: |
             let sleep = require('${{ env.workflow_scripts_path }}/js/Sleep.js')
-            sleep.method('1')
-            sleep.otherMethod('2')
+            
+            let params = {
+                solution_name: '${{ github.event.inputs.solution_name }}',
+                environment: '${{ github.event.inputs.environment }}'
+            }
+            console.log(params)
