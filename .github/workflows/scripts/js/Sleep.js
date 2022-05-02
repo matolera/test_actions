@@ -1,10 +1,5 @@
-const createWorkflowDispatch = (github, ref, context, params) => {
-  console.log(ref)
-  console.log(params)
-  console.log('github:' + github.rest.actions)
-  console.log('context:' + context)
-  
-  github.rest.actions.createWorkflowDispatch({
+const createWorkflowDispatch = async (github, ref, context, params) => {
+  await github.rest.actions.createWorkflowDispatch({
     owner: context.repo.owner,
     repo: context.repo.repo,
     workflow_id: 'export-unpack-commit-solution.yml',
@@ -13,16 +8,52 @@ const createWorkflowDispatch = (github, ref, context, params) => {
   })
 }
 
-const otherMethod = async (github, context) => {
+const checkStatus = async (github, context) => {
+  let currentStatus = null;
+  let conclusion = null;
+  sleep(2000)
+
+  do {
+    let workflowLog = await github.rest.actions.listWorkflowRuns({
+      owner: context.repo.owner,
+      repo: context.repo.repo,
+      workflow_id: 'export-unpack-commit-solution.yml',
+      per_page: 1
+    })
+
+    if (workflowLog.data.total_count > 0) {
+      currentStatus = workflowLog.data.workflow_runs[0].status
+      conclusion = workflowLog.data.workflow_runs[0].conclusion
+    }
+    else {
+      break
+    }
+
+    console.log('export-unpack-commit-solution status: ' + currentStatus)
+    sleep(20000)
+  } while (currentStatus != 'completed');
+
+  if (conclusion != 'success') {
+    core.setFailed('The export-unpack-commit-solution workflow failed.')
+  }
+}
+
+const checkEnvironment = async (github, context, environment) => {
   let res = await github.rest.repos.getAllEnvironments({
     owner: context.repo.owner,
     repo: context.repo.repo
   })
 
-  return res;
+  console.log(res.data.environments)
+
+  if (res.data.environments.length > 0) {
+    if (!res.data.environments.find(env => env.name === environment)) {
+      core.setFailed('The Environment does not exists!')
+    }
+  }
 }
 
-function sleep(milliseconds) {
+const sleep = (milliseconds) => {
   const date = Date.now();
   let currentDate = null;
   do {
@@ -31,6 +62,7 @@ function sleep(milliseconds) {
 }
 
 module.exports = {
-  createWorkflowDispatch, 
-  otherMethod
+  createWorkflowDispatch,
+  checkStatus,
+  checkEnvironment
 }

@@ -27,7 +27,7 @@ jobs:
         with:
           github-token: ${{secrets.WORKFLOW_DISPATCH_TOKEN}}
           script: |
-            let sleep = require('${{ env.workflow_scripts_path }}/js/Sleep.js')
+            let helper = require('${{ env.workflow_scripts_path }}/js/Sleep.js')
             
             let params = {
                 solution_name: '${{ github.event.inputs.solution_name }}',
@@ -37,20 +37,6 @@ jobs:
                 commit_message: 'commit message'
             }
 
-            //sleep.createWorkflowDispatch(github, '${{ github.ref }}', context, params)
-
-            //let res = await sleep.otherMethod(github, context)
-        
-            let res = await github.rest.repos.getAllEnvironments({
-              owner: context.repo.owner,
-              repo: context.repo.repo
-            })
-
-            if (res.data.environments.length > 0) {
-              if (!res.data.environments.find(env => env.name === '${{ github.event.inputs.environment }}')) {
-                core.setFailed('environment does not exists')
-              }
-              else {
-                console.log('ok!')
-              }
-            }
+            await helper.createWorkflowDispatch(github, '${{ github.ref }}', context, params)
+            await helper.checkStatus(github, context)
+            //await helper.checkEnvironment(github, context, '${{ github.event.inputs.environment }}')
