@@ -36,13 +36,9 @@ jobs:
               })
             }
 
-      - uses: actions/setup-node@v2
-        with:
-          node-version: 16
-      - run: npm install sleep
       - name: exec-export-unpack-commit-solution-workflow
         id: exec-export-unpack-commit-solution-workflow
-        uses: actions/github-script@v5
+        uses: actions/github-script@v6
         with:
           github-token: ${{secrets.WORKFLOW_DISPATCH_TOKEN}}
           script: |
@@ -66,10 +62,9 @@ jobs:
         with:
           script: |
             let sleep = require('${{ env.workflow_scripts_path }}/js/Sleep.js')
-            //let sleep = require('sleep')
             let currentStatus = null;
             let conclusion = null;
-            sleep.sleep(2)
+            sleep.sleep(2000)
 
             do {
               let workflowLog = await github.rest.actions.listWorkflowRuns({
@@ -88,7 +83,7 @@ jobs:
               }
 
               console.log('export-unpack-commit-solution status: ' + currentStatus)
-              sleep.sleep(20)
+              sleep.sleep(20000)
             } while (currentStatus != 'completed');
 
             if (conclusion != 'success') {
