@@ -8,7 +8,7 @@ const createWorkflowDispatch = async (github, ref, context, params) => {
   })
 }
 
-const checkStatus = async (github, context) => {
+const checkStatus = async (github, context, core) => {
   let currentStatus = null;
   let conclusion = null;
   sleep(2000)

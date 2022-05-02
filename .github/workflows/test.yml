@@ -38,5 +38,5 @@ jobs:
             }
 
             await helper.createWorkflowDispatch(github, '${{ github.ref }}', context, params)
-            await helper.checkStatus(github, context)
+            await helper.checkStatus(github, context, core)
             //await helper.checkEnvironment(github, context, '${{ github.event.inputs.environment }}')
