@@ -64,5 +64,6 @@ const sleep = (milliseconds) => {
 module.exports = {
   createWorkflowDispatch,
   checkStatus,
-  checkEnvironment
+  checkEnvironment,
+  sleep
 }
