@@ -26,7 +26,9 @@ jobs:
       with:
         nuget-version: '5.x'
     - run: nuget install Microsoft.PowerApps.CLI
-    - run: dir Microsoft.PowerApps.CLI.1.14.4/tools/
-    - run: Microsoft.PowerApps.CLI.1.14.4/tools/pac.exe auth create --url https://orgcbe07d64.crm.dynamics.com/ --tenant 39d9b13d-fe5b-4b87-8803-14c02047bfae --applicationId 76bea29c-1b39-489f-8ac3-16c8710afe32 --clientSecret kgF7Q~V1NVWxlffvWTiAUueDsh4hx64WcOoIo
+    - name: Create auth with environemnt
+      run: Microsoft.PowerApps.CLI.1.14.4/tools/pac.exe auth create --url https://orgcbe07d64.crm.dynamics.com/ --tenant 39d9b13d-fe5b-4b87-8803-14c02047bfae --applicationId 76bea29c-1b39-489f-8ac3-16c8710afe32 --clientSecret kgF7Q~V1NVWxlffvWTiAUueDsh4hx64WcOoIo
+    - name: Get solutions from environment
+      run: Microsoft.PowerApps.CLI.1.14.4/tools/pac.exe solution list --environment https://orgcbe07d64.crm.dynamics.com/
 
 
