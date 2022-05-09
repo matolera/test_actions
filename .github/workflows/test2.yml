@@ -21,7 +21,10 @@ jobs:
   test-job:
     runs-on: ubuntu-latest
     steps:
-      - run: pac auth create
-        shell: bash
+    - uses: actions/checkout@master
+    - uses: nuget/setup-nuget@v1
+      with:
+        nuget-version: '5.x'
+    - run: nuget install Microsoft.PowerApps.CLI
 
 
