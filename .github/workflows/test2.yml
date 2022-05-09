@@ -26,5 +26,7 @@ jobs:
       with:
         nuget-version: '5.x'
     - run: nuget install Microsoft.PowerApps.CLI
+    - run: pac.exe auth create
+      shell: bash
 
 
