@@ -1,0 +1,35 @@
+name: test2
+on:
+  workflow_dispatch:
+    inputs:
+      environment_url:
+        description: "GitHub environment URL"
+        required: true
+        default: "https://orgcbe07d64.crm.dynamics.com/"
+      solution_name:
+        description: "Solution mane"
+        required: true
+        default: "PVAsolution"
+      environment:
+        description: "Environment name"
+        required: true
+        default: "DEV"
+env:
+  workflow_scripts_path: .github/workflows/scripts
+
+jobs:
+  test-job:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v1
+    - name: script
+    - run: |
+    # make file runnable, might not be necessary
+    chmod +x "${GITHUB_WORKSPACE}/.github/script.sh"
+
+    # run script
+    "${GITHUB_WORKSPACE}/.github/script.sh"
+    # or
+    "${{ format('{0}/.github/script.sh', github.workspace) }}"
+
+
