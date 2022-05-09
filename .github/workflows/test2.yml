@@ -26,7 +26,7 @@ jobs:
       with:
         nuget-version: '5.x'
     - run: nuget install Microsoft.PowerApps.CLI
-    - run: dir Microsoft.PowerApps.CLI.1.14.4
-    - run: pac.exe auth create
+    - run: dir Microsoft.PowerApps.CLI.1.14.4/tools/
+    - run: Microsoft.PowerApps.CLI.1.14.4/tools/pac.exe auth create
 
 
