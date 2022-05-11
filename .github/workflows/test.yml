@@ -17,4 +17,4 @@ jobs:
       - uses: actions/checkout@v2
       - name: test-step-1
         run: |
-          sleep 5
+          sleep 10
