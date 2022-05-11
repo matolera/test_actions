@@ -89,8 +89,16 @@ const retryCheck = (github, context, delay, max_tries, retry = 1) => {
   })   
 }
 
-const sleep = async (milliseconds) => {
+const sleep2 = async (milliseconds) => {
   return new Promise(resolve => setTimeout(resolve, milliseconds));
+}
+
+const sleep = async (milliseconds) => {
+  const date = Date.now();
+  let currentDate = null;
+  do {
+    currentDate = Date.now();
+  } while (currentDate - date < milliseconds);
 }
 
 module.exports = {
