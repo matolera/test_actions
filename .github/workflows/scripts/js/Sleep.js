@@ -11,7 +11,7 @@ const createWorkflowDispatch = async (github, ref, context, params) => {
 const checkStatus = async (github, context, core) => {
   let currentStatus = null;
   let conclusion = null;
-//  sleep(2000)
+  sleep(2000)
 
   do {
     let workflowLog = await github.rest.actions.listWorkflowRuns({
@@ -30,7 +30,7 @@ const checkStatus = async (github, context, core) => {
     }
 
     console.log('export-unpack-commit-solution status: ' + currentStatus)
-    await waitUntil(() => currentStatus != 'completed')
+    await waitUntil(() => currentStatus = 'completed')
   } while (currentStatus != 'completed');
 
   if (conclusion != 'success') {
