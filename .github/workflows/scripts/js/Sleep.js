@@ -53,20 +53,6 @@ const checkEnvironment = async (github, context, environment) => {
   }
 }
 
-function test() {
-  let workflowLog = await github.rest.actions.listWorkflowRuns({
-    owner: context.repo.owner,
-    repo: context.repo.repo,
-    workflow_id: 'export-unpack-commit-solution.yml',
-    per_page: 1
-  })
-
-  if (workflowLog.data.total_count > 0) {
-    currentStatus = workflowLog.data.workflow_runs[0].status
-    conclusion = workflowLog.data.workflow_runs[0].conclusion
-  }
-}
-
 const waitUntil = (condition) => {
   console.log('waitUntil')
   return new Promise((resolve) => {
@@ -81,20 +67,6 @@ const waitUntil = (condition) => {
           console.log('resolve')
       }, 100)
   })
-}
-
-function until(conditionFunction) {
-
-  const poll = resolve => {
-    if(conditionFunction()) resolve();
-    else setTimeout(_ => poll(resolve), 10000);
-  }
-
-  return new Promise(poll);
-}
-
-const sleep2 = (milliseconds) => {
-
 }
 
 const sleep = (milliseconds) => {
