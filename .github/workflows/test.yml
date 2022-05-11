@@ -16,33 +16,5 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - name: test-step-1
-        uses: actions/github-script@v6
-        with:
-          github-token: ${{secrets.WORKFLOW_DISPATCH_TOKEN}}
-          script: |
-            let helper = require('${{ env.workflow_scripts_path }}/js/Sleep.js')
-            
-            let params = {
-                solution_name: '${{ secrets.SOLUTION_NAME }}',
-                environment_url: '${{ secrets.ENVIRONMENT_URL }}',
-                source_branch: '${{ secrets.SOURCE_BRANCH }}',
-                branch_to_create: '${{ secrets.BRANCH_TO_CREATE }}',
-                commit_message: 'test'
-            }
-
-            await helper.createWorkflowDispatch(github, '${{ github.ref }}', context, params)
-      - name: Sleep for 2 seconds
-        uses: jakejarvis/wait-action@master
-        with:
-          time: '2s'
-      - name: test-step-2
-        uses: actions/github-script@v6
-        with:
-          github-token: ${{secrets.WORKFLOW_DISPATCH_TOKEN}}
-          script: |
-            let helper = require('${{ env.workflow_scripts_path }}/js/Sleep.js')
-            let workflow = 'export-unpack-commit-solution.yml'
-
-            console.log('Checking the status for workflow ' + workflow)
-            helper.checkWorkflowStatus(github, context, core, workflow, 15000)
-            
+        run: |
+          sleep 5
