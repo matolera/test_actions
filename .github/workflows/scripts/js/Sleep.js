@@ -81,7 +81,7 @@ const retryCheck = (github, context, delay, retry = 1) => {
   statusChecker(github, context)
   .then(status => console.log(status))
   .catch(function (status) {
-    console.log(status + ' executing with delay ' + delay)
+    console.log(status + ' executing with delay ' + delay + ' ' + retry)
     setTimeout(() => retryCheck(github, context, delay * (retry + 1), retry + 1), delay)
   })   
 }
