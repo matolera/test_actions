@@ -34,6 +34,6 @@ jobs:
             console.log('init checkStatus')
             //await helper.checkStatus(github, context, core)
             helper.sleep(2000)
-            helper.retryCheck(github, context, 1000, 5)
+            helper.retryCheck(github, context, 500)
             console.log('end checkStatus')
             //await helper.checkEnvironment(github, context, '${{ github.event.inputs.environment }}')

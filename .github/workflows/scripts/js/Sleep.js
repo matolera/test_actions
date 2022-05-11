@@ -77,15 +77,12 @@ const statusChecker = async (github, context) => {
   })
 }
 
-const retryCheck = (github, context, delay, max_tries, retry = 1) => {
+const retryCheck = (github, context, delay, retry = 1) => {
   statusChecker(github, context)
   .then(status => console.log(status))
   .catch(function (status) {
-      if (max_tries > retry) {
-          console.log(status + ' executing with delay ' + delay)
-          setTimeout(() => retryCheck(github, context, delay * (retry + 1), max_tries, retry + 1), delay)
-      } else
-      console.log(status + ' executing with delay ' + delay)
+    console.log(status + ' executing with delay ' + delay)
+    setTimeout(() => retryCheck(github, context, delay * (retry + 1), retry + 1), delay)
   })   
 }
 
