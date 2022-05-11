@@ -44,5 +44,5 @@ jobs:
             let workflow = 'export-unpack-commit-solution.yml'
 
             console.log('Checking the status for workflow ' + workflow)
-            helper.checkWorkflowStatus(github, context, workflow, 15000)
+            helper.checkWorkflowStatus(github, context, core, workflow, 15000)
             
