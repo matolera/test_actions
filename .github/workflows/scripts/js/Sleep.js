@@ -91,7 +91,7 @@ const checkWorkflowStatus = (github, context, core, workflow, delay, retry = 1) 
   .catch(function (status) {
     if (status != 'completed') {
       console.log(new Date().toISOString() + ' - status: ' + status)
-      setTimeout(() => checkWorkflowStatus(github, context, delay, retry + 1), delay)
+      setTimeout(() => checkWorkflowStatus(github, context, core, workflow, delay, retry + 1), delay)
     }
     else {
       if (status != 'success') {
