@@ -65,7 +65,7 @@ const checkStatusNew = async (github, context) => {
     return workflowLog.data.workflow_runs[0];
 }
 
-const statusChecker = (github, context) => {
+const statusChecker = async (github, context) => {
   let result = await checkStatusNew(github, context)
   return new Promise((resolve, reject) => {
     if (result.status != 'completed') {
