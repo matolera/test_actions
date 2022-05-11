@@ -53,7 +53,7 @@ const checkEnvironment = async (github, context, environment) => {
   }
 }
 
-const checkStatusNew = async (github, context) => {
+const checkStatusNew = async (github, context, workflow) => {
     let workflowLog = await github.rest.actions.listWorkflowRuns({
       owner: context.repo.owner,
       repo: context.repo.repo,
