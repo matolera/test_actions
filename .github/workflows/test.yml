@@ -15,7 +15,7 @@ jobs:
     environment: ${{ github.event.inputs.environment }}
     steps:
       - uses: actions/checkout@v2
-      - name: test-step
+      - name: test-step-1
         uses: actions/github-script@v6
         with:
           github-token: ${{secrets.WORKFLOW_DISPATCH_TOKEN}}
@@ -31,9 +31,18 @@ jobs:
             }
 
             await helper.createWorkflowDispatch(github, '${{ github.ref }}', context, params)
+      - name: Sleep for 2 seconds
+        uses: jakejarvis/wait-action@master
+        with:
+          time: '2s'
+      - name: test-step-2
+        uses: actions/github-script@v6
+        with:
+          github-token: ${{secrets.WORKFLOW_DISPATCH_TOKEN}}
+          script: |
+            let helper = require('${{ env.workflow_scripts_path }}/js/Sleep.js')
+
             console.log('init checkStatus')
-            //await helper.checkStatus(github, context, core)
-            helper.sleep(2000)
-            helper.retryCheck(github, context, 500)
+            helper.retryCheck(github, context, 'export-unpack-commit-solution.yml', 15000)
             console.log('end checkStatus')
-            //await helper.checkEnvironment(github, context, '${{ github.event.inputs.environment }}')
+            

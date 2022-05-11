@@ -57,32 +57,46 @@ const checkStatusNew = async (github, context) => {
     let workflowLog = await github.rest.actions.listWorkflowRuns({
       owner: context.repo.owner,
       repo: context.repo.repo,
-      workflow_id: 'export-unpack-commit-solution.yml',
+      workflow_id: workflow,
       per_page: 1
     })
 
-    console.log('export-unpack-commit-solution status: ' + workflowLog.data.workflow_runs[0].status)
-    return workflowLog.data.workflow_runs[0];
-}
-
-const statusChecker = async (github, context) => {
-  let result = await checkStatusNew(github, context)
-  return new Promise((resolve, reject) => {
-    if (result.status != 'completed') {
-      reject("workflow not completed")
+    if (workflowLog.data.total_count > 0) {
+      return workflowLog.data.workflow_runs[0]
     }
     else {
-      resolve("workflow completed!!!")
+      return null
+    }
+}
+
+const statusChecker = async (github, context, workflow) => {
+  let result = await checkStatusNew(github, context, workflow)
+  return new Promise((resolve, reject) => {
+    if (result.status != 'completed') {
+      reject('not completed')
+    }
+    else {
+      if (result.conclusion != 'success') {
+        reject('Workflow execution failed. For more information go to ' + result.html_url)
+      }
+      else {
+        resolve(result.conclusion)
+      }
     }  
   })
 }
 
-const retryCheck = (github, context, delay, retry = 1) => {
-  statusChecker(github, context)
-  .then(status => console.log(status))
+const checkWorkflowStatus = (github, context, core, workflow, delay, retry = 1) => {
+  statusChecker(github, context, workflow)
   .catch(function (status) {
-    console.log(status + ' executing with delay ' + delay + ' ' + retry)
-    setTimeout(() => retryCheck(github, context, delay * (retry), retry + 1), delay)
+    if (status == 'not completed') {
+      setTimeout(() => checkWorkflowStatus(github, context, delay, retry + 1), delay)
+    }
+    else {
+      if (status != 'success') {
+        core.setFailed(status)
+      }
+    }
   })   
 }
 
