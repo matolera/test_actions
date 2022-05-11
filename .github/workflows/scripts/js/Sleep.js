@@ -53,7 +53,7 @@ const checkEnvironment = async (github, context, environment) => {
   }
 }
 
-const checkStatusNew = async (resolve, reject) => {
+const checkStatusNew = async (github, context) => {
     let workflowLog = await github.rest.actions.listWorkflowRuns({
       owner: context.repo.owner,
       repo: context.repo.repo,
@@ -62,28 +62,31 @@ const checkStatusNew = async (resolve, reject) => {
     })
 
     console.log('export-unpack-commit-solution status: ' + workflowLog.data.workflow_runs[0].status)
-    if (workflowLog.data.workflow_runs[0].status != 'completed') {
+    return workflowLog.data.workflow_runs[0];
+}
+
+const statusChecker = (github, context) => {
+  let result = await checkStatusNew(github, context)
+  return new Promise((resolve, reject) => {
+    if (result.status != 'completed') {
       reject("workflow not completed")
     }
     else {
       resolve("workflow completed!!!")
-    }
+    }  
+  })
 }
 
-const retryCheck = (delay, max_tries, retry = 1) => {
-  statusChecker()
+const retryCheck = (github, context, delay, max_tries, retry = 1) => {
+  statusChecker(github, context)
   .then(status => console.log(status))
   .catch(function (status) {
       if (max_tries > retry) {
           console.log(status + ' executing with delay ' + delay)
-          setTimeout(() => retryWorkWithDelay(delay * (retry + 1), max_tries, retry + 1), delay)
+          setTimeout(() => retryCheck(github, context, delay * (retry + 1), max_tries, retry + 1), delay)
       } else
       console.log(status + ' executing with delay ' + delay)
   })   
-}
-
-const statusChecker = () => {
-  return new Promise(checkStatusNew)
 }
 
 const sleep = async (milliseconds) => {

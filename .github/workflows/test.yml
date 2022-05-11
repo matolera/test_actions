@@ -33,6 +33,6 @@ jobs:
             await helper.createWorkflowDispatch(github, '${{ github.ref }}', context, params)
             console.log('init checkStatus')
             //await helper.checkStatus(github, context, core)
-            helper.retryCheck(1000, 5, github, context)
+            helper.retryCheck(github, context, 1000, 5)
             console.log('end checkStatus')
             //await helper.checkEnvironment(github, context, '${{ github.event.inputs.environment }}')
