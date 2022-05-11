@@ -77,7 +77,7 @@ const statusChecker = async (github, context, workflow) => {
     }
     else {
       if (result.conclusion != 'success') {
-        reject('Workflow execution failed. For more information go to ' + result.html_url)
+        resolve('Workflow execution failed. For more information go to ' + result.html_url)
       }
       else {
         resolve(result.conclusion)
@@ -88,15 +88,15 @@ const statusChecker = async (github, context, workflow) => {
 
 const checkWorkflowStatus = (github, context, core, workflow, delay, retry = 1) => {
   statusChecker(github, context, workflow)
+  .then(status => {
+    if (status != 'success') {
+      core.setFailed(status)
+    }
+  })
   .catch(function (status) {
     if (status != 'completed') {
       console.log(new Date().toISOString() + ' - status: ' + status)
       setTimeout(() => checkWorkflowStatus(github, context, core, workflow, delay, retry + 1), delay)
-    }
-    else {
-      if (status != 'success') {
-        core.setFailed(status)
-      }
     }
   })   
 }
