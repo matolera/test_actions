@@ -30,7 +30,7 @@ const checkStatus = async (github, context, core) => {
     }
 
     console.log('export-unpack-commit-solution status: ' + currentStatus)
-    await waitUntil(() => currentStatus = 'completed')
+    await waitUntil(() => currentStatus == 'completed')
   } while (currentStatus != 'completed');
 
   if (conclusion != 'success') {
