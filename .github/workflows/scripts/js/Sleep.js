@@ -53,20 +53,37 @@ const checkEnvironment = async (github, context, environment) => {
   }
 }
 
-const waitUntil = (condition) => {
-  console.log('waitUntil')
-  return new Promise((resolve) => {
-      let interval = setInterval(() => {
-          if (!condition()) {
-              console.log('!condition')
-              return
-          }
+const checkStatusNew = async (resolve, reject) => {
+    let workflowLog = await github.rest.actions.listWorkflowRuns({
+      owner: context.repo.owner,
+      repo: context.repo.repo,
+      workflow_id: 'export-unpack-commit-solution.yml',
+      per_page: 1
+    })
 
-          clearInterval(interval)
-          resolve()
-          console.log('resolve')
-      }, 100)
-  })
+    console.log('export-unpack-commit-solution status: ' + workflowLog.data.workflow_runs[0].status)
+    if (workflowLog.data.workflow_runs[0].status != 'completed') {
+      reject("workflow not completed")
+    }
+    else {
+      resolve("workflow completed!!!")
+    }
+}
+
+const retryCheck = (delay, max_tries, retry = 1) => {
+  statusChecker()
+  .then(status => console.log(status))
+  .catch(function (status) {
+      if (max_tries > retry) {
+          console.log(status + ' executing with delay ' + delay)
+          setTimeout(() => retryWorkWithDelay(delay * (retry + 1), max_tries, retry + 1), delay)
+      } else
+      console.log(status + ' executing with delay ' + delay)
+  })   
+}
+
+const statusChecker = () => {
+  return new Promise(checkStatusNew)
 }
 
 const sleep = async (milliseconds) => {
@@ -77,5 +94,6 @@ module.exports = {
   createWorkflowDispatch,
   checkStatus,
   checkEnvironment,
-  sleep
+  sleep,
+  retryCheck
 }
