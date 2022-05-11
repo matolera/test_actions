@@ -41,8 +41,9 @@ jobs:
           github-token: ${{secrets.WORKFLOW_DISPATCH_TOKEN}}
           script: |
             let helper = require('${{ env.workflow_scripts_path }}/js/Sleep.js')
+            let workflow = 'export-unpack-commit-solution.yml'
 
-            console.log('init checkStatus')
-            helper.retryCheck(github, context, 'export-unpack-commit-solution.yml', 15000)
+            console.log('Checking the status for workflow ' + workflow)
+            helper.checkWorkflowStatus(github, context, workflow, 15000)
             console.log('end checkStatus')
             

@@ -73,7 +73,7 @@ const statusChecker = async (github, context, workflow) => {
   let result = await checkStatusNew(github, context, workflow)
   return new Promise((resolve, reject) => {
     if (result.status != 'completed') {
-      reject('not completed')
+      reject(result.status)
     }
     else {
       if (result.conclusion != 'success') {
@@ -89,7 +89,8 @@ const statusChecker = async (github, context, workflow) => {
 const checkWorkflowStatus = (github, context, core, workflow, delay, retry = 1) => {
   statusChecker(github, context, workflow)
   .catch(function (status) {
-    if (status == 'not completed') {
+    if (status != 'completed') {
+      console.log(new Date().toISOString() + ' - status: ' + status)
       setTimeout(() => checkWorkflowStatus(github, context, delay, retry + 1), delay)
     }
     else {
@@ -117,5 +118,5 @@ module.exports = {
   checkStatus,
   checkEnvironment,
   sleep,
-  retryCheck
+  checkWorkflowStatus
 }
