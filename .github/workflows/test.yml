@@ -2,14 +2,6 @@ name: test
 on:
   workflow_dispatch:
     inputs:
-      environment_url:
-        description: "GitHub environment URL"
-        required: true
-        default: "https://orgcbe07d64.crm.dynamics.com/"
-      solution_name:
-        description: "Solution mane"
-        required: true
-        default: "PVAsolution"
       environment:
         description: "Environment name"
         required: true
@@ -20,6 +12,7 @@ env:
 jobs:
   test-job:
     runs-on: ubuntu-latest
+    environment: ${{ github.event.inputs.environment }}
     steps:
       - uses: actions/checkout@v2
       - name: test-step
@@ -30,13 +23,15 @@ jobs:
             let helper = require('${{ env.workflow_scripts_path }}/js/Sleep.js')
             
             let params = {
-                solution_name: '${{ github.event.inputs.solution_name }}',
-                environment_url: '${{ github.event.inputs.environment_url }}',
-                source_branch: 'main',
-                branch_to_create: 'test_branch_2',
-                commit_message: 'commit message'
+                solution_name: '${{ secrets.SOLUTION_NAME }}',
+                environment_url: '${{ secrets.ENVIRONMENT_URL }}',
+                source_branch: '${{ secrets.SOURCE_BRANCH }}',
+                branch_to_create: '${{ secrets.BRANCH_TO_CREATE }}',
+                commit_message: 'test'
             }
 
             await helper.createWorkflowDispatch(github, '${{ github.ref }}', context, params)
+            console.log('init checkStatus')
             await helper.checkStatus(github, context, core)
+            console.log('end checkStatus')
             //await helper.checkEnvironment(github, context, '${{ github.event.inputs.environment }}')

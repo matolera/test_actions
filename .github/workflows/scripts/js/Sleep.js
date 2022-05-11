@@ -20,7 +20,7 @@ const checkStatus = async (github, context, core) => {
       workflow_id: 'export-unpack-commit-solution.yml',
       per_page: 1
     })
-
+    console.log(workflowLog.data.total_count)
     if (workflowLog.data.total_count > 0) {
       currentStatus = workflowLog.data.workflow_runs[0].status
       conclusion = workflowLog.data.workflow_runs[0].conclusion
