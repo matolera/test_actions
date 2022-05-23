@@ -23,7 +23,7 @@ inputs:
     required: true
 
 outputs:
-  solution_exists:
+  check_solution_exists:
     description: "solution existence flag"
     value: ${{ steps.get-solutions-from-env.outputs.exists }}
 
@@ -49,13 +49,13 @@ runs:
         # List all the solutions on the environment
         $result = & "$pacFolder\pac.exe solution list"
         $lines = $result -split "`n"
-        $exists = $false
+        $check_solution_exists = $false
 
         # Check if the solution unique name exists
         For ($i=5; $i -lt $lines.Length - 1; $i++) {
-          $exists = $lines[i] -like ${{ inputs.solution_name }}
+          $check_solution_exists = $lines[i] -like ${{ inputs.solution_name }}
         }
 
         # Return the flag
-        echo "::set-output name=exists::$exists"
+        echo "::set-output name=check_solution_exists::$check_solution_exists"
       shell: powershell

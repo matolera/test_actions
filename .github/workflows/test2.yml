@@ -2,15 +2,7 @@ name: test2
 on:
   workflow_dispatch:
     inputs:
-      environment_url:
-        description: "GitHub environment URL"
-        required: true
-        default: "https://orgcbe07d64.crm.dynamics.com/"
-      solution_name:
-        description: "Solution mane"
-        required: true
-        default: "PVAsolution"
-      environment:
+      environment_name:
         description: "Environment name"
         required: true
         default: "DEV"
@@ -18,17 +10,21 @@ env:
   workflow_scripts_path: .github/workflows/scripts
 
 jobs:
-  test-job:
+  check-solution-existence:
     runs-on: windows-2022
+    environment: ${{ github.event.inputs.environment_name }}
     steps:
-    - uses: actions/checkout@master
-    - uses: nuget/setup-nuget@v1
-      with:
-        nuget-version: '5.x'
-    - run: nuget install Microsoft.PowerApps.CLI
-    - name: Create auth with environemnt
-      run: Microsoft.PowerApps.CLI.1.14.4/tools/pac.exe auth create --url https://orgcbe07d64.crm.dynamics.com/ --tenant 39d9b13d-fe5b-4b87-8803-14c02047bfae --applicationId 76bea29c-1b39-489f-8ac3-16c8710afe32 --clientSecret kgF7Q~V1NVWxlffvWTiAUueDsh4hx64WcOoIo
-    - name: Get solutions from environment
-      run: Microsoft.PowerApps.CLI.1.14.4/tools/pac.exe solution list --environment https://orgcbe07d64.crm.dynamics.com/
+      - uses: actions/checkout@v2
+      - id: check-solution
+        uses: ./.github/actions/check-solution-existence
+        with:
+          solution_name: ${{ secrets.SOLUTION_NAME }}
+          environment_url: ${{ secrets.ENVIRONMENT_URL }}
+          tenant_id: ${{ secrets.TENANT_ID }}
+          app_id: ${{ secrets.CLIENT_ID }}
+          client_secret: ${{ secrets.CLIENT_SECRET }}
+          secrets: ${{ toJSON(secrets) }}
+    outputs:
+      exists: ${{ steps.check-solution.exists }}
 
 
