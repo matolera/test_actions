@@ -52,6 +52,7 @@ runs:
 
         # List all the solutions on the environment
         $result = & "$pacFolder\pac.exe" @("solution", "list")
+        echo $result
         $lines = $result -split "`n"
         $check_solution_exists = $false
 
