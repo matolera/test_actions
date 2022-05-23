@@ -21,7 +21,7 @@ jobs:
           solution_name: ${{ secrets.SOLUTION_NAME }}
           environment_url: ${{ secrets.ENVIRONMENT_URL }}
           tenant_id: ${{ secrets.TENANT_ID }}
-          app_id: ${{ secrets.CLIENT_ID }}
+          client_id: ${{ secrets.CLIENT_ID }}
           client_secret: ${{ secrets.CLIENT_SECRET }}
           secrets: ${{ toJSON(secrets) }}
     outputs:

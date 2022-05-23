@@ -44,7 +44,7 @@ runs:
         $pacFolder = $nugetFolder.FullName + "\tools"
 
         # Created a connection with the environment
-        & "$pacFolder\pac.exe auth create --url ${{ inputs.environment_url }} --tenant ${{ inputs.tenant_id }} --applicationId ${{ inputs.client_id }} --clientSecret ${{ inputs.client_secret }}"
+        echo "$pacFolder\pac.exe auth create --url ${{ inputs.environment_url }} --tenant ${{ inputs.tenant_id }} --applicationId ${{ inputs.client_id }} --clientSecret ${{ inputs.client_secret }}"
 
         # List all the solutions on the environment
         $result = & "$pacFolder\pac.exe solution list"
