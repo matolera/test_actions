@@ -1,11 +1,10 @@
-function Enable-Flows ($tenantId, $clientId, $clientSecret, $environmentUrl, $solutionName, $deploymentSettingsFile) {
-    echo $tenantId
-    echo $clientId
-    echo $clientSecret
-    echo $environmentUrl
-    echo $solutionName
-    echo $deploymentSettingsFile
+# Enable flows based on connection references
+# Flows can only be turned on if the user turning them on has permissions to connections being referenced by the connection reference
+# As of authoring this script, the Service Principal (SPN) we use to connect to the Dataverse API cannot turn on the Flow
+# The temporary workaround is use a brute force approach for now.  We use the identity of the connection for the first connection
+# reference we find to turn on the Flow.  This may have side effects or unintended consequences we haven't fully tested.
 
+function Enable-Flows ($tenantId, $clientId, $clientSecret, $environmentUrl, $solutionName, $deploymentSettingsFile) {
     Import-Module Microsoft.Xrm.Data.PowerShell
     Import-Module  Microsoft.PowerApps.Administration.PowerShell
 
@@ -30,13 +29,10 @@ function Enable-Flows ($tenantId, $clientId, $clientSecret, $environmentUrl, $so
                 $connRefs = Get-CrmRecords -conn $conn -EntityLogicalName connectionreference -FilterAttribute "connectionreferencelogicalname" -FilterOperator "eq" -FilterValue $connectionRefConfig.LogicalName
                 if ($connRefs.Count -gt 0) {      
                     # Get connection
-                    echo $connectionRefConfig.ConnectionId
-                    echo $environmentName
                     $connections = Get-AdminPowerAppConnection -EnvironmentName $environmentName -Filter $connectionRefConfig.ConnectionId
-                    echo $connections.Count
+                        
                     # Get Dataverse systemuserid for the system user that maps to the aad user guid that created the connection 
                     $systemusers = Get-CrmRecords -conn $conn -EntityLogicalName systemuser -FilterAttribute "azureactivedirectoryobjectid" -FilterOperator "eq" -FilterValue $connections[0].CreatedBy.id
-                    echo $systemusers.Count
                     if ($systemusers.Count -gt 0) {
                         # Impersonate the Dataverse systemuser that created the connection when turning on the flow
                         $impersonationCallerId = $systemusers.CrmRecords[0].systemuserid
