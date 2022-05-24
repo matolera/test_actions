@@ -44,23 +44,25 @@ runs:
         $pacFolder = $nugetFolder.FullName + "\tools"
 
         # Create a connection to the environment
-        $environment_url = "${{ inputs.environment_url }}"
-        $tenant_id = "${{ inputs.tenant_id }}"
-        $client_id = "${{ inputs.client_id }}"
-        $client_secret = "${{ inputs.client_secret }}"
+        # $environment_url = "${{ inputs.environment_url }}"
+        # $tenant_id = "${{ inputs.tenant_id }}"
+        # $client_id = "${{ inputs.client_id }}"
+        # $client_secret = "${{ inputs.client_secret }}"
+        $environment_url = "https://orgcbe07d64.crm.dynamics.com/"
+        $tenant_id = "39d9b13d-fe5b-4b87-8803-14c02047bfae"
+        $client_id = "76bea29c-1b39-489f-8ac3-16c8710afe32"
+        $client_secret = "kgF7Q~V1NVWxlffvWTiAUueDsh4hx64WcOoIo"
         $connection = & "$pacFolder\pac.exe" @("auth", "create", "--url", "$environment_url", "--tenant", "$tenant_id", "--applicationId", "$client_id", "--clientSecret", "$client_secret")
-        echo $connection
 
         # List all the solutions on the environment
         $result = & "$pacFolder\pac.exe" @("solution", "list")
-        echo $result
         $lines = $result -split "`n"
         $check_solution_exists = $false
 
         # Check if the solution unique name exists
-        # For ($i=5; $i -lt $lines.Length - 1; $i++) {
-        #  $check_solution_exists = $lines[i] -like ${{ inputs.solution_name }}
-        # }
+        For ($i=5; $i -lt $lines.Length - 1; $i++) {
+          $check_solution_exists = $lines[i] -like ${{ inputs.solution_name }}
+        }
 
         # Return the flag
         echo "::set-output name=check_solution_exists::$check_solution_exists"

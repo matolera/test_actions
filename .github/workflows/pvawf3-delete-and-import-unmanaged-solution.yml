@@ -48,7 +48,7 @@ jobs:
             let helper = require('${{ env.workflow_scripts_path }}/js/githubHelper.js')
             await helper.checkWorkflowStatus(github, context, core, 'pvawf2-sync-from-main.yml', 20000)
 
-  check-environment-existence:
+  check-solution-existence:
     runs-on: windows-2022
     steps:
       - uses: actions/checkout@v2
@@ -58,7 +58,7 @@ jobs:
           solution_name: ${{ secrets.SOLUTION_NAME }}
           environment_url: ${{ secrets.ENVIRONMENT_URL }}
           tenant_id: ${{ secrets.TENANT_ID }}
-          app_id: ${{ secrets.CLIENT_ID }}
+          client_id: ${{ secrets.CLIENT_ID }}
           client_secret: ${{ secrets.CLIENT_SECRET }}
           secrets: ${{ toJSON(secrets) }}
     outputs:
@@ -68,7 +68,6 @@ jobs:
     runs-on: ubuntu-latest
     needs: check-environment-existence
     environment: ${{ github.event.inputs.target_environment }}
-    if: '${{ needs.check-environment-existence.outputs.exists }}' == 'false'
     steps:
       - uses: actions/checkout@v2
       - name: import-unmanaged-solution
@@ -102,7 +101,6 @@ jobs:
     runs-on: ubuntu-latest
     needs: import-unmanaged-solution
     environment: ${{ github.event.inputs.target_environment }}'
-    if: '${{ needs.check-environment-existence.outputs.exists }}' == 'true'
     steps:
       - uses: actions/checkout@v2
       - name: delete-and-import-unmanaged-solution
