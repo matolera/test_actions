@@ -60,9 +60,9 @@ runs:
         $check_solution_exists = $false
 
         # Check if the solution unique name exists
-        For ($i=5; $i -lt $lines.Length - 1; $i++) {
-          $check_solution_exists = $lines[i] -like ${{ inputs.solution_name }}
-        }
+        #For ($i=5; $i -lt $lines.Length - 1; $i++) {
+        #  $check_solution_exists = $lines[i] -like ${{ inputs.solution_name }}
+        #}
 
         # Return the flag
         echo "::set-output name=check_solution_exists::$check_solution_exists"
