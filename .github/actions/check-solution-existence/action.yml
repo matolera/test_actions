@@ -23,9 +23,12 @@ inputs:
     required: true
 
 outputs:
-  check_solution_exists:
+  exists:
     description: "solution existence flag"
     value: ${{ steps.get-solutions-from-env.outputs.exists }}
+  test:
+    description: "solution existence flag"
+    value: ${{ steps.get-solutions-from-env.outputs.test }}
 
 runs:
   using: "composite"
