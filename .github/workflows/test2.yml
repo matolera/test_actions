@@ -30,17 +30,16 @@ jobs:
   delete-build-deploy-solution:
     runs-on: ubuntu-latest
     needs: check-solution-existence
-    environment: ${{ needs.check-solution-existence.outputs.check-solution.exists }}
     steps:
       - name: step 1
         if: ${{ needs.check-solution-existence.outputs.check-solution.exists }} == 'True'
         shell: bash
         run: |
-          echo "step 1"
+          echo "step 1 ${{ needs.check-solution-existence.outputs.check-solution.exists }}"
       - name: step 2
         if: ${{ needs.check-solution-existence.outputs.check-solution.exists }} == 'False'
         shell: bash
         run: |
-          echo "step 2"
+          echo "step 2 ${{ needs.check-solution-existence.outputs.check-solution.exists }}"
 
 
