@@ -27,24 +27,23 @@ jobs:
       - name: extra step
         shell: bash
         run: |
-          echo "value ${{ steps.check-solution.outputs.test }}"     
-          echo "value ${{ steps.check-solution.outputs.exists }}"       
+          echo "value ${{ steps.check-solution.outputs.solution_exists }}"       
     outputs:
-      exists: ${{ steps.check-solution.outputs.exists }}
+      solution_exists: ${{ steps.check-solution.outputs.solution_exists }}
   
   delete-build-deploy-solution:
     runs-on: ubuntu-latest
     needs: check-solution-existence
     steps:
       - name: step 1
-        #if: ${{ needs.check-solution-existence.outputs.solution-exists }} == 'True'
+        #if: ${{ needs.check-solution-existence.outputs.solution-solution_exists }} == 'True'
         shell: bash
         run: |
-          echo "step 1 ${{ needs.check-solution-existence.outputs.exists }}"
+          echo "step 1 ${{ needs.check-solution-existence.outputs.solution_exists }}"
       - name: step 2
-        #if: ${{ needs.check-solution-existence.outputs.solution-exists }} == 'False'
+        #if: ${{ needs.check-solution-existence.outputs.solution-solution_exists }} == 'False'
         shell: bash
         run: |
-          echo "step 2 ${{ needs.check-solution-existence.outputs.exists }}"
+          echo "step 2 ${{ needs.check-solution-existence.outputs.solution_exists }}"
 
 

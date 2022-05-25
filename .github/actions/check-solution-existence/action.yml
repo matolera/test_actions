@@ -23,12 +23,9 @@ inputs:
     required: true
 
 outputs:
-  exists:
+  solution_exists:
     description: "solution existence flag"
-    value: ${{ steps.get-solutions-from-env.outputs.exists }}
-  test:
-    description: "solution existence flag"
-    value: ${{ steps.get-solutions-from-env.outputs.test }}
+    value: ${{ steps.get-solutions-from-env.outputs.solution_exists }}
 
 runs:
   using: "composite"
@@ -71,8 +68,5 @@ runs:
         }
 
         # Return the flag
-        echo $solution_exists
-        $test  = "1234"
-        echo "::set-output name=test::valor"
-        echo "::set-output name=exists::$test"
+        echo "::set-output name=solution_exists::$solution_exists"
       shell: pwsh
