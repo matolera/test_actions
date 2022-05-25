@@ -24,8 +24,12 @@ jobs:
           client_id: ${{ secrets.CLIENT_ID }}
           client_secret: ${{ secrets.CLIENT_SECRET }}
           secrets: ${{ toJSON(secrets) }}
+      - name: extra step
+        shell: bash
+        run: |
+          echo "value ${{ steps.check-solution.outputs.exists }}"       
     outputs:
-      exists: ${{ steps.check-solution.solution_exists }}
+      exists: ${{ steps.check-solution.exists }}
   
   delete-build-deploy-solution:
     runs-on: ubuntu-latest

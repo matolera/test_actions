@@ -69,5 +69,6 @@ runs:
 
         # Return the flag
         echo $solution_exists
-        echo "::set-output name=solution_exists::$solution_exists"
+        $test  = "1234"
+        echo "::set-output name=exists::$test"
       shell: powershell
