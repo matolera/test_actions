@@ -5,7 +5,7 @@ on:
       environment_name:
         description: "Environment name"
         required: true
-        default: "DEV"
+        default: "PR"
 env:
   workflow_scripts_path: .github/workflows/scripts
 
@@ -36,12 +36,12 @@ jobs:
     needs: check-solution-existence
     steps:
       - name: step 1
-        if: ${{ needs.check-solution-existence.outputs.solution_exists }} == 'True'
+        if: "${{ needs.check-solution-existence.outputs.solution_exists }}" == "True"
         shell: bash
         run: |
           echo "step 1 ${{ needs.check-solution-existence.outputs.solution_exists }}"
       - name: step 2
-        if: ${{ needs.check-solution-existence.outputs.solution_exists }} == 'False'
+        if: "${{ needs.check-solution-existence.outputs.solution_exists }}" == "False"
         shell: bash
         run: |
           echo "step 2 ${{ needs.check-solution-existence.outputs.solution_exists }}"
