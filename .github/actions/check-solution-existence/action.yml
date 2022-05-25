@@ -57,16 +57,16 @@ runs:
         # List all the solutions on the environment
         $result = & "$pacFolder\pac.exe" @("solution", "list")
         $lines = $result -split "`n"
-        $check_solution_exists = $false
+        $solution_exists = $false
 
         # Check if the solution unique name exists
         for ($i=5; $i -lt $lines.Length - 1; $i++) {
             if ($lines[$i].Contains("${{ inputs.solution_name }}")) {
-                $check_solution_exists = $true
+                $solution_exists = $true
                 break
             }
         }
 
         # Return the flag
-        echo "::set-output name=check_solution_exists::$check_solution_exists"
+        echo "::set-output name=solution_exists::$solution_exists"
       shell: powershell

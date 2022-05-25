@@ -15,7 +15,7 @@ jobs:
     environment: ${{ github.event.inputs.environment_name }}
     steps:
       - uses: actions/checkout@v2
-      - id: check-solution
+      - id: check-solution-existence
         uses: ./.github/actions/check-solution-existence
         with:
           solution_name: ${{ secrets.SOLUTION_NAME }}
@@ -25,21 +25,21 @@ jobs:
           client_secret: ${{ secrets.CLIENT_SECRET }}
           secrets: ${{ toJSON(secrets) }}
     outputs:
-      check-solution.exists: ${{ steps.check-solution.exists }}
+      solution-exists: ${{ steps.check-solution-existence.solution_exists }}
   
   delete-build-deploy-solution:
     runs-on: ubuntu-latest
     needs: check-solution-existence
     steps:
       - name: step 1
-        if: ${{ needs.check-solution-existence.outputs.check-solution.exists }} == 'True'
+        if: ${{ needs.check-solution-existence.outputs.solution-exists }} == 'True'
         shell: bash
         run: |
-          echo "step 1 ${{ needs.check-solution-existence.outputs.check-solution.exists }}"
+          echo "step 1 ${{ needs.check-solution-existence.outputs.solution-exists }}"
       - name: step 2
-        if: ${{ needs.check-solution-existence.outputs.check-solution.exists }} == 'False'
+        if: ${{ needs.check-solution-existence.outputs.solution-exists }} == 'False'
         shell: bash
         run: |
-          echo "step 2 ${{ needs.check-solution-existence.outputs.check-solution.exists }}"
+          echo "step 2 ${{ needs.check-solution-existence.outputs.solution-exists }}"
 
 
