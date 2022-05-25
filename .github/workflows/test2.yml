@@ -27,6 +27,7 @@ jobs:
       - name: extra step
         shell: bash
         run: |
+          echo "value ${{ steps.check-solution.outputs.test }}"     
           echo "value ${{ steps.check-solution.outputs.exists }}"       
     outputs:
       exists: ${{ steps.check-solution.exists }}

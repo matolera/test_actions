@@ -70,5 +70,6 @@ runs:
         # Return the flag
         echo $solution_exists
         $test  = "1234"
+        echo "::set-output name=test::valor"
         echo "::set-output name=exists::$test"
       shell: pwsh
