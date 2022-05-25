@@ -68,5 +68,6 @@ runs:
         }
 
         # Return the flag
+        echo $solution_exists
         echo "::set-output name=solution_exists::$solution_exists"
       shell: powershell
