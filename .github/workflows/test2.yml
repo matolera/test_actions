@@ -30,7 +30,7 @@ jobs:
           echo "value ${{ steps.check-solution.outputs.test }}"     
           echo "value ${{ steps.check-solution.outputs.exists }}"       
     outputs:
-      exists: ${{ steps.check-solution.exists }}
+      exists: ${{ steps.check-solution.outputs.exists }}
   
   delete-build-deploy-solution:
     runs-on: ubuntu-latest
