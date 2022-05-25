@@ -101,7 +101,7 @@ jobs:
 
   delete-and-import-unmanaged-solution:
     runs-on: ubuntu-latest
-    needs: import-unmanaged-solution
+    needs: check-environment-existence
     if: needs.check-solution-existence.outputs.solution_exists == 'True'
     environment: ${{ github.event.inputs.target_environment }}'
     steps:
