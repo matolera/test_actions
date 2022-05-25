@@ -18,39 +18,39 @@ env:
   workflow_scripts_path: .github/workflows/scripts
 
 jobs:
-  #execute-pvawf2-sync-from-main:
-  #  runs-on: ubuntu-latest
-  #  steps:
-  #    - uses: actions/checkout@v2
-  #    - name: run-pvawf2-sync-from-main
-  #      id: run-pvawf2-sync-from-main
-  #      uses: actions/github-script@v6
-  #      with:
-  #        github-token: ${{secrets.WORKFLOW_DISPATCH_TOKEN}}
-  #        script: |
-  #          let helper = require('${{ env.workflow_scripts_path }}/js/githubHelper.js')
-  #          let ref = '${{ github.ref }}'
-  #          let params = {
-  #            environment_name: '${{ github.event.inputs.source_environment }}',
-  #            commit_message: '${{ github.event.inputs.commit_message }}'
-  #          }
-  #          await helper.dispatchWorkflow(github, context, 'pvawf2-sync-from-main.yml', ref, params)
+  execute-pvawf2-sync-from-main:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: run-pvawf2-sync-from-main
+        id: run-pvawf2-sync-from-main
+        uses: actions/github-script@v6
+        with:
+          github-token: ${{secrets.WORKFLOW_DISPATCH_TOKEN}}
+          script: |
+            let helper = require('${{ env.workflow_scripts_path }}/js/githubHelper.js')
+            let ref = '${{ github.ref }}'
+            let params = {
+              environment_name: '${{ github.event.inputs.source_environment }}',
+              commit_message: '${{ github.event.inputs.commit_message }}'
+            }
+            await helper.dispatchWorkflow(github, context, 'pvawf2-sync-from-main.yml', ref, params)
 
-  #    - name: wait-workflow-dispatch-ends
-  #      run: |
-  #        sleep 5
+      - name: wait-workflow-dispatch-ends
+        run: |
+          sleep 5
 
-  #    - name: check-pvawf2-sync-from-main-workflow-status
-  #      id: check-pvawf2-sync-from-main-workflow-status
-  #      uses: actions/github-script@v6
-  #      with:
-  #        script: |
-  #          let helper = require('${{ env.workflow_scripts_path }}/js/githubHelper.js')
-  #          await helper.checkWorkflowStatus(github, context, core, 'pvawf2-sync-from-main.yml', 20000)
+      - name: check-pvawf2-sync-from-main-workflow-status
+        id: check-pvawf2-sync-from-main-workflow-status
+        uses: actions/github-script@v6
+        with:
+          script: |
+            let helper = require('${{ env.workflow_scripts_path }}/js/githubHelper.js')
+            await helper.checkWorkflowStatus(github, context, core, 'pvawf2-sync-from-main.yml', 20000)
 
   check-solution-existence:
     runs-on: windows-2022
-    # needs: execute-pvawf2-sync-from-main
+    needs: execute-pvawf2-sync-from-main
     environment: ${{ github.event.inputs.target_environment }}
     steps:
       - uses: actions/checkout@v2
@@ -113,8 +113,6 @@ jobs:
         with:
           github-token: ${{secrets.WORKFLOW_DISPATCH_TOKEN}}
           script: |
-            console.log('${{ github.event.inputs.target_environment }}')
-            console.log('${{ secrets.SOLUTION_NAME }}')
             let helper = require('${{ env.workflow_scripts_path }}/js/githubHelper.js')
             let ref = '${{ github.ref }}'
             let params = {
