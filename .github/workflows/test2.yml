@@ -25,7 +25,7 @@ jobs:
           client_secret: ${{ secrets.CLIENT_SECRET }}
           secrets: ${{ toJSON(secrets) }}
     outputs:
-      exists: ${{ steps.check-solution.exists }}
+      check-solution.exists: ${{ steps.check-solution.exists }}
   
   delete-build-deploy-solution:
     runs-on: ubuntu-latest
