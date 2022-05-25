@@ -53,6 +53,7 @@ runs:
         # $client_id = "76bea29c-1b39-489f-8ac3-16c8710afe32"
         # $client_secret = "kgF7Q~V1NVWxlffvWTiAUueDsh4hx64WcOoIo"
         $connection = & "$pacFolder\pac.exe" @("auth", "create", "--url", "$environment_url", "--tenant", "$tenant_id", "--applicationId", "$client_id", "--clientSecret", "$client_secret")
+        echo $connection
 
         # List all the solutions on the environment
         $result = & "$pacFolder\pac.exe" @("solution", "list")
