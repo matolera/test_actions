@@ -50,6 +50,7 @@ jobs:
 
   check-solution-existence:
     runs-on: windows-2022
+    needs: execute-pvawf2-sync-from-main
     environment: ${{ github.event.inputs.target_environment }}
     steps:
       - uses: actions/checkout@v2
