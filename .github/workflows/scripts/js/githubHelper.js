@@ -29,7 +29,6 @@ const listWorkflowRuns = async (github, context, workflow_id) => {
 const checkStatus = async (github, context, workflow_id) => {
   let result = await listWorkflowRuns(github, context, workflow_id)
   return new Promise((resolve, reject) => {
-    console.log(result)
     if (result.status != 'completed') {
       reject(result.status)
     }
@@ -47,8 +46,6 @@ const checkStatus = async (github, context, workflow_id) => {
 const checkWorkflowStatus = (github, context, core, workflow_id, delay, successStatus = 'success', exitStatus = 'completed') => {
   checkStatus(github, context, workflow_id)
   .then(status => {
-    console.log('then status: ' + status)
-    console.log('successStatus: ' + successStatus)
     if (status != successStatus) {
       core.setFailed(status)
     }
@@ -57,8 +54,6 @@ const checkWorkflowStatus = (github, context, core, workflow_id, delay, successS
     }
   })
   .catch(status => {
-    console.log('catch status: ' + status)
-    console.log('exitStatus: ' + exitStatus)
     if (status != exitStatus) {
       console.log(new Date().toISOString() + ' - status: ' + status)
       setTimeout(() => checkWorkflowStatus(github, context, core, workflow_id, delay, successStatus, exitStatus), delay)
