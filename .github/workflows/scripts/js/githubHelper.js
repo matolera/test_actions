@@ -7,7 +7,7 @@ const dispatchWorkflow = async (github, context, workflow_id, reference, paramet
     inputs: parameters
   })
 
-  await checkWorkflowStatus(github, context, null, workflow_id, 5000, 'success', 'queued');
+  setTimeout(() => await checkWorkflowStatus(github, context, null, workflow_id, 5000, 'success', 'queued'), 5000);
 }
 
 const listWorkflowRuns = async (github, context, workflow_id) => {
