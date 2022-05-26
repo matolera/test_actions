@@ -48,6 +48,7 @@ const checkWorkflowStatus = (github, context, core, workflow_id, successStatus =
   checkStatus(github, context, workflow_id)
   .then(status => {
     console.log('then status: ' + status)
+    console.log('successStatus: ' + successStatus)
     if (status != successStatus) {
       core.setFailed(status)
     }
@@ -57,6 +58,7 @@ const checkWorkflowStatus = (github, context, core, workflow_id, successStatus =
   })
   .catch(status => {
     console.log('catch status: ' + status)
+    console.log('exitStatus: ' + exitStatus)
     if (status != exitStatus) {
       console.log(new Date().toISOString() + ' - status: ' + status)
       setTimeout(() => checkWorkflowStatus(github, context, core, workflow_id, delay), delay)
