@@ -12,9 +12,26 @@ env:
 jobs:
   test-job:
     runs-on: ubuntu-latest
-    environment: ${{ github.event.inputs.environment }}
     steps:
       - uses: actions/checkout@v2
-      - name: test-step-1
-        run: |
-          sleep 10
+      - name: exec-export-unpack-commit-solution-workflow
+        id: exec-export-unpack-commit-solution-workflow
+        uses: actions/github-script@v6
+        with:
+          github-token: ${{secrets.WORKFLOW_DISPATCH_TOKEN}}
+          script: |
+            let helper = require('${{ env.workflow_scripts_path }}/js/githubHelper.js')
+            let ref = '${{ github.ref }}'
+            let params = {
+              environment_name: '${{ github.event.inputs.environment }}',
+            }
+            await helper.dispatchWorkflow(github, context, 'test2.yml', ref, params)
+
+      - name: check-workflow-status
+        id: check-workflow-status
+        uses: actions/github-script@v6
+        with:
+          github-token: ${{secrets.WORKFLOW_DISPATCH_TOKEN}}
+          script: |
+            let helper = require('${{ env.workflow_scripts_path }}/js/githubHelper.js')
+            await helper.checkWorkflowStatus(github, context, core, 'test2.yml', 20000)
