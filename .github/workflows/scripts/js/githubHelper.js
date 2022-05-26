@@ -7,7 +7,7 @@ const dispatchWorkflow = async (github, context, workflow_id, reference, paramet
     inputs: parameters
   })
 
-  await checkWorkflowStatus(github, context, null, workflow_id, 'success', 'queued', 5000);
+  await checkWorkflowStatus(github, context, null, workflow_id, 5000, 'success', 'queued');
 }
 
 const listWorkflowRuns = async (github, context, workflow_id) => {
@@ -44,7 +44,7 @@ const checkStatus = async (github, context, workflow_id) => {
   })
 }
 
-const checkWorkflowStatus = (github, context, core, workflow_id, successStatus = 'success', exitStatus = 'completed', delay) => {
+const checkWorkflowStatus = (github, context, core, workflow_id, delay, successStatus = 'success', exitStatus = 'completed') => {
   checkStatus(github, context, workflow_id)
   .then(status => {
     console.log('then status: ' + status)
@@ -61,7 +61,7 @@ const checkWorkflowStatus = (github, context, core, workflow_id, successStatus =
     console.log('exitStatus: ' + exitStatus)
     if (status != exitStatus) {
       console.log(new Date().toISOString() + ' - status: ' + status)
-      setTimeout(() => checkWorkflowStatus(github, context, core, workflow_id, successStatus, exitStatus, delay), delay)
+      setTimeout(() => checkWorkflowStatus(github, context, core, workflow_id, delay, successStatus, exitStatus), delay)
     }
   })
 }
