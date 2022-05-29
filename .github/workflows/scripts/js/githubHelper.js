@@ -60,7 +60,7 @@ const getWorkflowRun = async (github, context, run_id) => {
   })
 
   if (workflowRun.data != null) {
-    return workflowLog.data
+    return workflowRun.data
   }
   else {
     return null
