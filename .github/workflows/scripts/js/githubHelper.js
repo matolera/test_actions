@@ -17,13 +17,14 @@ const dispatchWorkflow = async (github, context, workflow_id, reference, paramet
 
   setTimeout(async () => {
     let currentRun = await listWorkflowRuns(github, context, workflow_id)
-    console.log(currentRun)
+
     if (currentRun != null) {
       currentRunId = currentRun.id
     }
-
-    return currentRunId
   }, 3000)
+
+  console.log(currentRunId)
+  return currentRunId
 }
 
 const listWorkflowRuns = async (github, context, workflow_id) => {
