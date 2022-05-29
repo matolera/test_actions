@@ -27,7 +27,7 @@ jobs:
             }
             let runId = await helper.dispatchWorkflow(github, context, 'test2.yml', ref, params)
             console.log('runId1: ' + runId)
-            echo '::set-output name=runId::' + runId
+            core.exportVariable('runId', runId)
 
       - name: check-workflow-status
         id: check-workflow-status
