@@ -15,14 +15,14 @@ const dispatchWorkflow = async (github, context, workflow_id, reference, paramet
     inputs: parameters
   })
 
-  await runWorkflow(github, context, workflow_id).then((id) => {
+  await getCurrentRunId(github, context, workflow_id).then((id) => {
     currentRunId = id
   })
   
   return currentRunId
 }
 
-const runWorkflow = async (github, context, workflow_id) => {
+const getCurrentRunId = async (github, context, workflow_id) => {
   return new Promise((resolve, reject) => {
     setTimeout(async () => {
       let currentRun = await listWorkflowRuns(github, context, workflow_id)

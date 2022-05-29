@@ -25,9 +25,8 @@ jobs:
             let params = {
               environment_name: '${{ github.event.inputs.environment }}',
             }
-            let runId = await helper.dispatchWorkflow(github, context, 'test2.yml', ref, params)
-            console.log('runId1: ' + runId)
-            core.exportVariable('runId', runId)
+            let id = await helper.dispatchWorkflow(github, context, 'test3.yml', ref, params)
+            core.exportVariable('workflowRunId', id)
 
       - name: check-workflow-status
         id: check-workflow-status
@@ -35,7 +34,6 @@ jobs:
         with:
           github-token: ${{secrets.WORKFLOW_DISPATCH_TOKEN}}
           script: |
-            let runId = ${{ env.runId }}
-            console.log('runId2: ' + runId)
+            let id = ${{ env.workflowRunId }}
             let helper = require('${{ env.workflow_scripts_path }}/js/githubHelper.js')
-            await helper.checkWorkflowStatus(github, context, core, 'test2.yml', runId, 20000)
+            await helper.checkWorkflowStatus(github, context, core, 'test3.yml', id, 20000)
