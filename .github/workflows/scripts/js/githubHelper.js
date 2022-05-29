@@ -1,4 +1,12 @@
 const dispatchWorkflow = async (github, context, workflow_id, reference, parameters) => {
+  let lastRun = listWorkflowRuns(github, context, workflow_id)
+  let lastRunId = 0
+  let currentRunId = 0
+
+  if (workflowLog.data.total_count > 0) {
+    lastRunId = lastRun.data.workflow_runs[0].id
+  }
+
   await github.rest.actions.createWorkflowDispatch({
     owner: context.repo.owner,
     repo: context.repo.repo,
@@ -7,7 +15,15 @@ const dispatchWorkflow = async (github, context, workflow_id, reference, paramet
     inputs: parameters
   })
 
-  setTimeout(() => checkWorkflowStatus(github, context, null, workflow_id, 5000, 'success', 'queued'), 5000)
+  setTimeout(() => {
+    let currentRun = listWorkflowRuns(github, context, workflow_id)
+    
+    if (currentRun.data.total_count > 0) {
+      currentRunId = currentRun.data.workflow_runs[0].id
+    }
+
+    return currentRunId
+  }, 3000)
 }
 
 const listWorkflowRuns = async (github, context, workflow_id) => {
@@ -26,8 +42,26 @@ const listWorkflowRuns = async (github, context, workflow_id) => {
   }
 }
 
-const checkStatus = async (github, context, workflow_id) => {
-  let result = await listWorkflowRuns(github, context, workflow_id)
+const getWorkflowRun = async (github, context, run_id) => {
+  let workflowRun = await github.rest.actions.getWorkflowRun({
+    owner: context.repo.owner,
+    repo: context.repo.repo,
+    run_id: run_id
+  })
+
+  console.log(workflowRun)
+  /*
+  if (workflowRun.data.total_count > 0) {
+    return workflowLog.data.workflow_runs[0]
+  }
+  else {
+    return null
+  }
+  */
+}
+
+const checkStatus = async (github, context, run_id) => {
+  let result = await getWorkflowRun(github, context, run_id)
   return new Promise((resolve, reject) => {
     if (result.status != 'completed') {
       reject(result.status)
@@ -43,10 +77,10 @@ const checkStatus = async (github, context, workflow_id) => {
   })
 }
 
-const checkWorkflowStatus = (github, context, core, workflow_id, delay, successStatus = 'success', exitStatus = 'completed') => {
-  checkStatus(github, context, workflow_id)
+const checkWorkflowStatus = (github, context, core, workflow_id, run_id, delay) => {
+  checkStatus(github, context, run_id)
   .then(status => {
-    if (status != successStatus) {
+    if (status != 'success') {
       core.setFailed(status)
     }
     else {
@@ -54,9 +88,9 @@ const checkWorkflowStatus = (github, context, core, workflow_id, delay, successS
     }
   })
   .catch(status => {
-    if (status != exitStatus) {
+    if (status != 'completed') {
       console.log(new Date().toISOString() + ' - status: ' + status)
-      setTimeout(() => checkWorkflowStatus(github, context, core, workflow_id, delay, successStatus, exitStatus), delay)
+      setTimeout(() => checkWorkflowStatus(github, context, core, workflow_id, run_id, delay), delay)
     }
   })
 }
