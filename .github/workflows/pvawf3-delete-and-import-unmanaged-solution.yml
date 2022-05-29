@@ -34,11 +34,8 @@ jobs:
               environment_name: '${{ github.event.inputs.source_environment }}',
               commit_message: '${{ github.event.inputs.commit_message }}'
             }
-            await helper.dispatchWorkflow(github, context, 'pvawf2-sync-from-main.yml', ref, params)
-
-      - name: wait-workflow-dispatch-ends
-        run: |
-          sleep 5
+            let id = await helper.dispatchWorkflow(github, context, 'pvawf2-sync-from-main.yml', ref, params)
+            core.exportVariable('workflowRunId', id)
 
       - name: check-pvawf2-sync-from-main-workflow-status
         id: check-pvawf2-sync-from-main-workflow-status
@@ -46,7 +43,7 @@ jobs:
         with:
           script: |
             let helper = require('${{ env.workflow_scripts_path }}/js/githubHelper.js')
-            await helper.checkWorkflowStatus(github, context, core, 'pvawf2-sync-from-main.yml', 20000)
+            await helper.checkWorkflowStatus(github, context, core, 'pvawf2-sync-from-main.yml', ${{ env.workflowRunId }}, 20000)
 
   check-solution-existence:
     runs-on: windows-2022
@@ -86,11 +83,8 @@ jobs:
               environment_url: '${{ secrets.ENVIRONMENT_URL }}',
               ref: '${{ github.ref }}'
             }
-            await helper.dispatchWorkflow(github, context, 'import-unmanaged-solution.yml', ref, params)
-
-      - name: wait-workflow-dispatch-ends
-        run: |
-          sleep 5
+            let id = await helper.dispatchWorkflow(github, context, 'import-unmanaged-solution.yml', ref, params)
+            core.exportVariable('workflowRunId', id)
 
       - name: check-import-unmanaged-solution-workflow-status
         id: check-import-unmanaged-solution-workflow-status
@@ -98,7 +92,7 @@ jobs:
         with:
           script: |
             let helper = require('${{ env.workflow_scripts_path }}/js/githubHelper.js')
-            await helper.checkWorkflowStatus(github, context, core, 'import-unmanaged-solution.yml', 20000)
+            await helper.checkWorkflowStatus(github, context, core, 'import-unmanaged-solution.yml', ${{ env.workflowRunId }}, 20000)
 
   delete-and-import-unmanaged-solution:
     runs-on: ubuntu-latest
@@ -120,11 +114,8 @@ jobs:
               environment_url: '${{ secrets.ENVIRONMENT_URL }}',
               ref: '${{ github.ref }}'
             }
-            await helper.dispatchWorkflow(github, context, 'delete-and-import-unmanaged-solution.yml', ref, params)
-
-      - name: wait-workflow-dispatch-ends
-        run: |
-          sleep 5
+            let id = await helper.dispatchWorkflow(github, context, 'delete-and-import-unmanaged-solution.yml', ref, params)
+            core.exportVariable('workflowRunId', id)
 
       - name: check-delete-and-import-unmanaged-solution-workflow-status
         id: check-delete-and-import-unmanaged-solution-workflow-status
@@ -132,4 +123,4 @@ jobs:
         with:
           script: |
             let helper = require('${{ env.workflow_scripts_path }}/js/githubHelper.js')
-            await helper.checkWorkflowStatus(github, context, core, 'delete-and-import-unmanaged-solution.yml', 20000)
+            await helper.checkWorkflowStatus(github, context, core, 'delete-and-import-unmanaged-solution.yml', ${{ env.workflowRunId }}, 20000)

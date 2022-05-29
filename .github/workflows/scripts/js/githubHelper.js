@@ -16,7 +16,9 @@ const dispatchWorkflow = async (github, context, workflow_id, reference, paramet
   })
 
   await getCurrentRunId(github, context, workflow_id).then((id) => {
-    currentRunId = id
+    if (lastRunId != id) {
+      currentRunId = id
+    }
   })
   
   return currentRunId

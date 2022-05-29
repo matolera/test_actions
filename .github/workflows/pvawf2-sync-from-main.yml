@@ -31,11 +31,8 @@ jobs:
               environment_name: '${{ github.event.inputs.environment_name }}',
               commit_message: '${{ github.event.inputs.commit_message }}'
             }
-            await helper.dispatchWorkflow(github, context, 'pvawf1-export-unpack-commit-solution-workflow.yml', ref, params)
-
-      - name: wait-workflow-dispatch-ends
-        run: |
-          sleep 5
+            let id = await helper.dispatchWorkflow(github, context, 'pvawf1-export-unpack-commit-solution-workflow.yml', ref, params)
+            core.exportVariable('workflowRunId', id)
 
       - name: check-pvawf1-export-unpack-commit-solution-workflow-status
         id: check-pvawf1-export-unpack-commit-solution-workflow-status
@@ -43,7 +40,7 @@ jobs:
         with:
           script: |
             let helper = require('${{ env.workflow_scripts_path }}/js/githubHelper.js')
-            await helper.checkWorkflowStatus(github, context, core, 'pvawf1-export-unpack-commit-solution-workflow.yml', 20000)
+            await helper.checkWorkflowStatus(github, context, core, 'pvawf1-export-unpack-commit-solution-workflow.yml', ${{ env.workflowRunId }}, 20000)
 
   sync-from-main-branch:
     runs-on: ubuntu-latest
@@ -63,11 +60,8 @@ jobs:
               from_branch: '${{ secrets.SOURCE_BRANCH }}',
               to_branch: '${{ secrets.BRANCH_TO_CREATE }}'
             }
-            await helper.dispatchWorkflow(github, context, 'sync-from-main.yml', ref, params)
-
-      - name: wait-workflow-dispatch-ends
-        run: |
-          sleep 5
+            let id = await helper.dispatchWorkflow(github, context, 'sync-from-main.yml', ref, params)
+            core.exportVariable('workflowRunId', id)
 
       - name: check-sync-from-main-workflow-status
         id: check-sync-from-main-workflow-status
@@ -75,4 +69,4 @@ jobs:
         with:
           script: |
             let helper = require('${{ env.workflow_scripts_path }}/js/githubHelper.js')
-            await helper.checkWorkflowStatus(github, context, core, 'sync-from-main.yml', 20000)
+            await helper.checkWorkflowStatus(github, context, core, 'sync-from-main.yml', ${{ env.workflowRunId }}, 20000)

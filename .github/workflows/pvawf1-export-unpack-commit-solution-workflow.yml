@@ -75,11 +75,8 @@ jobs:
               branch_to_create: '${{ secrets.BRANCH_TO_CREATE }}',
               commit_message: '${{ github.event.inputs.commit_message }}'
             }
-            await helper.dispatchWorkflow(github, context, 'export-unpack-commit-solution.yml', ref, params)
-
-      - name: wait-workflow-dispatch-ends
-        run: |
-          sleep 5
+            let id = await helper.dispatchWorkflow(github, context, 'export-unpack-commit-solution.yml', ref, params)
+            core.exportVariable('workflowRunId', id)
 
       - name: check-workflow-status
         id: check-workflow-status
@@ -88,4 +85,4 @@ jobs:
           github-token: ${{secrets.WORKFLOW_DISPATCH_TOKEN}}
           script: |
             let helper = require('${{ env.workflow_scripts_path }}/js/githubHelper.js')
-            await helper.checkWorkflowStatus(github, context, core, 'export-unpack-commit-solution.yml', 20000)
+            await helper.checkWorkflowStatus(github, context, core, 'export-unpack-commit-solution.yml', ${{ env.workflowRunId }}, 20000)

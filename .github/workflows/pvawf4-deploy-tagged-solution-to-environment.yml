@@ -50,11 +50,8 @@ jobs:
               tag: '${{ github.event.inputs.tag }}',
               environment: '${{ github.event.inputs.environment_name }}'
             }
-            await helper.dispatchWorkflow(github, context, 'deploy-tagged-solution-to-environment.yml', ref, params)
-
-      - name: wait-workflow-dispatch-ends
-        run: |
-          sleep 5
+            let id = await helper.dispatchWorkflow(github, context, 'deploy-tagged-solution-to-environment.yml', ref, params)
+            core.exportVariable('workflowRunId', id)
 
       - name: check-workflow-status
         id: check-workflow-status
@@ -62,4 +59,4 @@ jobs:
         with:
           script: |
             let helper = require('${{ env.workflow_scripts_path }}/js/githubHelper.js')
-            await helper.checkWorkflowStatus(github, context, core, 'deploy-tagged-solution-to-environment.yml', 20000)
+            await helper.checkWorkflowStatus(github, context, core, 'deploy-tagged-solution-to-environment.yml', ${{ env.workflowRunId }}, 20000)
