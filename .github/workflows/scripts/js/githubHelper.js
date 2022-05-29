@@ -4,7 +4,7 @@ const dispatchWorkflow = async (github, context, workflow_id, reference, paramet
   let currentRunId = 0
 
   if (lastRun != null) {
-    lastRunId = lastRun.data.workflow_runs[0].id
+    lastRunId = lastRun.id
   }
 
   await github.rest.actions.createWorkflowDispatch({
@@ -19,7 +19,7 @@ const dispatchWorkflow = async (github, context, workflow_id, reference, paramet
     let currentRun = await listWorkflowRuns(github, context, workflow_id)
     console.log(currentRun)
     if (currentRun != null) {
-      currentRunId = currentRun.data.workflow_runs[0].id
+      currentRunId = currentRun.id
     }
 
     return currentRunId
