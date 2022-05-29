@@ -4,7 +4,6 @@ const dispatchWorkflow = async (github, context, workflow_id, reference, paramet
   let currentRunId = 0
 
   if (lastRun != null) {
-    console.log(lastRun.id)
     lastRunId = lastRun.id
   }
 
@@ -17,7 +16,6 @@ const dispatchWorkflow = async (github, context, workflow_id, reference, paramet
   })
 
   await runWorkflow(github, context, workflow_id).then((id) => {
-    console.log(id)
     currentRunId = id
   })
   
@@ -28,12 +26,10 @@ const runWorkflow = async (github, context, workflow_id) => {
   return new Promise((resolve, reject) => {
     setTimeout(async () => {
       let currentRun = await listWorkflowRuns(github, context, workflow_id)
-      console.log(currentRun)
       if (currentRun != null) {
         resolve(currentRun.id)
       }
       else {
-        console.log('reject')
         reject(-1)
       }
     }, 2000)
@@ -63,15 +59,12 @@ const getWorkflowRun = async (github, context, run_id) => {
     run_id: run_id
   })
 
-  console.log(workflowRun)
-  /*
-  if (workflowRun.data.total_count > 0) {
-    return workflowLog.data.workflow_runs[0]
+  if (workflowRun.data != null) {
+    return workflowLog.data
   }
   else {
     return null
   }
-  */
 }
 
 const checkStatus = async (github, context, run_id) => {
