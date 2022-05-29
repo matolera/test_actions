@@ -15,7 +15,7 @@ const dispatchWorkflow = async (github, context, workflow_id, reference, paramet
     inputs: parameters
   })
 
-  runWorkflow().then((id) => {
+  runWorkflow(github, context, workflow_id).then((id) => {
     currentRunId = id
   })
   
