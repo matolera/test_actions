@@ -3,7 +3,7 @@ const dispatchWorkflow = async (github, context, workflow_id, reference, paramet
   let lastRunId = 0
   let currentRunId = 0
 
-  if (workflowLog.data.total_count > 0) {
+  if (lastRun.data.total_count > 0) {
     lastRunId = lastRun.data.workflow_runs[0].id
   }
 
