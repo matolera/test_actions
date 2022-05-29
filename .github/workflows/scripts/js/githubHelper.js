@@ -15,7 +15,7 @@ const dispatchWorkflow = async (github, context, workflow_id, reference, paramet
     inputs: parameters
   })
 
-  setTimeout(() => {
+  setTimeout(async () => {
     let currentRun = await listWorkflowRuns(github, context, workflow_id)
     console.log(currentRun)
     if (currentRun.data.total_count > 0) {
