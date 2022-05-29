@@ -2,7 +2,7 @@ const dispatchWorkflow = async (github, context, workflow_id, reference, paramet
   let lastRun = listWorkflowRuns(github, context, workflow_id)
   let lastRunId = 0
   let currentRunId = 0
-
+  console.log(lastRun)
   if (lastRun.data.total_count > 0) {
     lastRunId = lastRun.data.workflow_runs[0].id
   }
@@ -17,7 +17,7 @@ const dispatchWorkflow = async (github, context, workflow_id, reference, paramet
 
   setTimeout(() => {
     let currentRun = listWorkflowRuns(github, context, workflow_id)
-    
+    console.log(currentRun)
     if (currentRun.data.total_count > 0) {
       currentRunId = currentRun.data.workflow_runs[0].id
     }
