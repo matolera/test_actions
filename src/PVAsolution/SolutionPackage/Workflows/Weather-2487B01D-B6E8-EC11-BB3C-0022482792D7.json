@@ -1,0 +1,116 @@
+{
+  "properties": {
+    "connectionReferences": {
+      "shared_msnweather": {
+        "api": {
+          "name": "shared_msnweather"
+        },
+        "connection": {
+          "connectionReferenceLogicalName": "cr132_sharedmsnweather_ce3ac"
+        },
+        "runtimeSource": "embedded"
+      }
+    },
+    "definition": {
+      "$schema": "https://schema.management.azure.com/providers/Microsoft.Logic/schemas/2016-06-01/workflowdefinition.json#",
+      "actions": {
+        "Get_current_weather": {
+          "inputs": {
+            "authentication": "@parameters('$authentication')",
+            "host": {
+              "apiId": "/providers/Microsoft.PowerApps/apis/shared_msnweather",
+              "connectionName": "shared_msnweather",
+              "operationId": "CurrentWeather"
+            },
+            "parameters": {
+              "Location": "buenos aires",
+              "units": "Metric"
+            }
+          },
+          "metadata": {
+            "operationMetadataId": "07a1288f-1947-4cb0-8098-cf88f37b852c"
+          },
+          "runAfter": {},
+          "type": "OpenApiConnection"
+        },
+        "Initialize_variable": {
+          "inputs": {
+            "variables": [
+              {
+                "name": "conditions",
+                "type": "string",
+                "value": "@outputs('Get_current_weather')?['body/responses/weather/current/cap']"
+              }
+            ]
+          },
+          "metadata": {
+            "operationMetadataId": "f19b51e0-5510-4b71-adbc-8082e5971c27"
+          },
+          "runAfter": {
+            "Get_current_weather": [
+              "Succeeded"
+            ]
+          },
+          "type": "InitializeVariable"
+        },
+        "Return_value(s)_to_Power_Virtual_Agents": {
+          "inputs": {
+            "body": {
+              "result": "@variables('conditions')"
+            },
+            "schema": {
+              "properties": {
+                "result": {
+                  "title": "result",
+                  "type": "string",
+                  "x-ms-dynamically-added": true
+                }
+              },
+              "type": "object"
+            },
+            "statusCode": 200
+          },
+          "kind": "VirtualAgent",
+          "metadata": {
+            "operationMetadataId": "5741abf9-fa87-4234-a54b-b3a67f0332a2"
+          },
+          "runAfter": {
+            "Initialize_variable": [
+              "Succeeded"
+            ]
+          },
+          "type": "Response"
+        }
+      },
+      "contentVersion": "1.0.0.0",
+      "outputs": {},
+      "parameters": {
+        "$authentication": {
+          "defaultValue": {},
+          "type": "SecureObject"
+        },
+        "$connections": {
+          "defaultValue": {},
+          "type": "Object"
+        }
+      },
+      "triggers": {
+        "manual": {
+          "inputs": {
+            "schema": {
+              "properties": {},
+              "required": [],
+              "type": "object"
+            }
+          },
+          "kind": "VirtualAgent",
+          "metadata": {
+            "operationMetadataId": "4c545669-d084-4917-bf81-e437b67edea7"
+          },
+          "type": "Request"
+        }
+      }
+    }
+  },
+  "schemaVersion": "1.0.0.0"
+}

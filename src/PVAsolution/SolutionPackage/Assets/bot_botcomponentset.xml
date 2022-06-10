@@ -5,6 +5,9 @@
   <bot_botcomponent botcomponentid.schemaname="new_customtype_c3816fa51ce746a7bbc7a8e3c5978c88_f86fcadfd497444e91ed11c12b059d10" botid.schemaname="new_bot_c3816fa51ce746a7bbc7a8e3c5978c88">
     <iscustomizable>1</iscustomizable>
   </bot_botcomponent>
+  <bot_botcomponent botcomponentid.schemaname="new_topic_66e57fc8e68e44f996a570d7e815e675" botid.schemaname="new_bot_c3816fa51ce746a7bbc7a8e3c5978c88">
+    <iscustomizable>1</iscustomizable>
+  </bot_botcomponent>
   <bot_botcomponent botcomponentid.schemaname="new_topic_c3816fa51ce746a7bbc7a8e3c5978c88_21a34f1673a24096a99ba0effb63cc1d" botid.schemaname="new_bot_c3816fa51ce746a7bbc7a8e3c5978c88">
     <iscustomizable>1</iscustomizable>
   </bot_botcomponent>
