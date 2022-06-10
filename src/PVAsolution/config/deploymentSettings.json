@@ -7,9 +7,9 @@
   ],
   "ConnectionReferences": [
     {
-      "LogicalName": "cr132_connReference1",
-      "ConnectionId": "#{CONN_REFERENCE1}#",
-      "ConnectorId": "/providers/Microsoft.PowerApps/apis/shared_office365users"
+      "LogicalName": "cr132_sharedmsnweather_ce3ac",
+      "ConnectionId": "",
+      "ConnectorId": "/providers/Microsoft.PowerApps/apis/shared_msnweather"
     }
   ]
 }
