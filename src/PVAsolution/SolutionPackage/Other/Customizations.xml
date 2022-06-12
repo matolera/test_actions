@@ -12,9 +12,9 @@
   <CustomControls />
   <EntityDataProviders />
   <connectionreferences>
-    <connectionreference connectionreferencelogicalname="cr132_connReference1">
-      <connectionreferencedisplayname>connReference1</connectionreferencedisplayname>
-      <connectorid>/providers/Microsoft.PowerApps/apis/shared_office365users</connectorid>
+    <connectionreference connectionreferencelogicalname="cr132_sharedmsnweather_ce3ac">
+      <connectionreferencedisplayname>MSN Weather PVAsolution-ce3ac</connectionreferencedisplayname>
+      <connectorid>/providers/Microsoft.PowerApps/apis/shared_msnweather</connectorid>
       <iscustomizable>1</iscustomizable>
       <statecode>0</statecode>
       <statuscode>1</statuscode>
