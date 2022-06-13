@@ -3,7 +3,6 @@
     {
       "triggerQueries": [
         "test",
-		"test2",
         "test topic"
       ],
       "dialogId": "new_topic_66e57fc8e68e44f996a570d7e815e675",
