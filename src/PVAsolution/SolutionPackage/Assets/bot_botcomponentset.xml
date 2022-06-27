@@ -44,4 +44,7 @@
   <bot_botcomponent botcomponentid.schemaname="new_topic_c3816fa51ce746a7bbc7a8e3c5978c88_f56d1a3e522740c78f9fac0939332dbd_goodbye" botid.schemaname="new_bot_c3816fa51ce746a7bbc7a8e3c5978c88">
     <iscustomizable>1</iscustomizable>
   </bot_botcomponent>
+  <bot_botcomponent botcomponentid.schemaname="new_topic_de94cd2d05634a6fa2fd5192340cbccd" botid.schemaname="new_bot_c3816fa51ce746a7bbc7a8e3c5978c88">
+    <iscustomizable>1</iscustomizable>
+  </bot_botcomponent>
 </bot_botcomponentset>
