@@ -20,7 +20,7 @@ const dispatchWorkflow = async (github, context, workflow_id, reference, paramet
       currentRunId = id
     }
   })
-  
+  console.log(currentRunId)
   return currentRunId
 }
 
