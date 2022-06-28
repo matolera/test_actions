@@ -62,6 +62,7 @@ const getWorkflowRun = async (github, context, run_id) => {
   })
 
   if (workflowRun.data != null) {
+    console.log(workflowRun.data)
     return workflowRun.data
   }
   else {
@@ -71,6 +72,7 @@ const getWorkflowRun = async (github, context, run_id) => {
 
 const checkStatus = async (github, context, run_id) => {
   let result = await getWorkflowRun(github, context, run_id)
+  console.log(result)
   return new Promise((resolve, reject) => {
     if (result.status != 'completed') {
       reject(result.status)
