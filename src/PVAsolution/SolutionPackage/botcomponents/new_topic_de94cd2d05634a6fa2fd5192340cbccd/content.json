@@ -2,7 +2,9 @@
   "intents": [
     {
       "triggerQueries": [
-        "weather"
+        "weather",
+		"tell me the weather",
+		"current weather"
       ],
       "dialogId": "new_topic_de94cd2d05634a6fa2fd5192340cbccd",
       "isTriggeringEnabled": true,
