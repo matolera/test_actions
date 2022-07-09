@@ -25,6 +25,10 @@ inputs:
   solution_action:
     description: "solution_action"
     required: true
+  solution_exists:
+    description: "solution_exists"
+    default: "false"
+    required: false
 
 runs:
   using: "composite"
@@ -71,6 +75,12 @@ runs:
 
         $solutionZip = $files[0].FullName
         echo "::set-output name=solution_zip::$solutionZip"
+
+    - name: test step
+      id: test step
+      shell: pwsh
+      run: |
+        echo "${{ inputs.solution_exists }}"
 
     - name: import-solution-to-environment
       uses: microsoft/powerplatform-actions/import-solution@latest
