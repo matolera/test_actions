@@ -19,7 +19,7 @@ on:
       solution_action:
         description: "update or upgrade the solution"
         required: true
-        default: "update"
+        default: "upgrade"
 
 jobs:
   check-solution-existence:
