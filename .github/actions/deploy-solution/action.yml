@@ -77,7 +77,6 @@ runs:
         echo "::set-output name=solution_zip::$solutionZip"
 
     - name: test step
-      id: test step
       shell: pwsh
       run: |
         echo "${{ inputs.solution_exists }}"
