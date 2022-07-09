@@ -1,12 +1,12 @@
 {
   "properties": {
     "connectionReferences": {
-      "shared_msnweather_1": {
+      "shared_msnweather": {
         "api": {
           "name": "shared_msnweather"
         },
         "connection": {
-          "connectionReferenceLogicalName": "new_sharedmsnweather_56dd8"
+          "connectionReferenceLogicalName": "dkdt_PVAMSNWeather"
         },
         "runtimeSource": "embedded"
       }
@@ -14,49 +14,29 @@
     "definition": {
       "$schema": "https://schema.management.azure.com/providers/Microsoft.Logic/schemas/2016-06-01/workflowdefinition.json#",
       "actions": {
-        "Get_current_weather": {
+        "Get_forecast_for_today": {
           "inputs": {
             "authentication": "@parameters('$authentication')",
             "host": {
               "apiId": "/providers/Microsoft.PowerApps/apis/shared_msnweather",
-              "connectionName": "shared_msnweather_1",
-              "operationId": "CurrentWeather"
+              "connectionName": "shared_msnweather",
+              "operationId": "TodaysForecast"
             },
             "parameters": {
-              "Location": "buenos aires",
+              "Location": "@triggerBody()['text']",
               "units": "Metric"
             }
           },
           "metadata": {
-            "operationMetadataId": "07a1288f-1947-4cb0-8098-cf88f37b852c"
+            "operationMetadataId": "8b7e3459-10f9-4429-acdf-23ae559f1bb1"
           },
           "runAfter": {},
           "type": "OpenApiConnection"
         },
-        "Initialize_variable": {
-          "inputs": {
-            "variables": [
-              {
-                "name": "conditions",
-                "type": "string",
-                "value": "@outputs('Get_current_weather')?['body/responses/weather/current/cap']"
-              }
-            ]
-          },
-          "metadata": {
-            "operationMetadataId": "f19b51e0-5510-4b71-adbc-8082e5971c27"
-          },
-          "runAfter": {
-            "Get_current_weather": [
-              "Succeeded"
-            ]
-          },
-          "type": "InitializeVariable"
-        },
         "Return_value(s)_to_Power_Virtual_Agents": {
           "inputs": {
             "body": {
-              "result": "@variables('conditions')"
+              "result": "@outputs('Get_forecast_for_today')?['body/responses/daily/pvdrCap']"
             },
             "schema": {
               "properties": {
@@ -72,10 +52,10 @@
           },
           "kind": "VirtualAgent",
           "metadata": {
-            "operationMetadataId": "5741abf9-fa87-4234-a54b-b3a67f0332a2"
+            "operationMetadataId": "823efd00-a21b-446c-935e-1e7461d097d5"
           },
           "runAfter": {
-            "Initialize_variable": [
+            "Get_forecast_for_today": [
               "Succeeded"
             ]
           },
@@ -98,14 +78,24 @@
         "manual": {
           "inputs": {
             "schema": {
-              "properties": {},
-              "required": [],
+              "properties": {
+                "text": {
+                  "description": "Please enter your input",
+                  "title": "city",
+                  "type": "string",
+                  "x-ms-content-hint": "TEXT",
+                  "x-ms-dynamically-added": true
+                }
+              },
+              "required": [
+                "text"
+              ],
               "type": "object"
             }
           },
           "kind": "VirtualAgent",
           "metadata": {
-            "operationMetadataId": "4c545669-d084-4917-bf81-e437b67edea7"
+            "operationMetadataId": "f2e30bdc-74ae-4fbf-a62b-6c5b333fa7a9"
           },
           "type": "Request"
         }

@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Workflow WorkflowId="{b7a7b57a-b6f5-ec11-bb3d-000d3a9b31f8}" Name="Get Weather 2" Description="Call this flow from Power Virtual Agents." xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-  <JsonFileName>/Workflows/GetWeather2-B7A7B57A-B6F5-EC11-BB3D-000D3A9B31F8.json</JsonFileName>
+<Workflow WorkflowId="{91e77e75-a0f8-ec11-bb3d-002248233f82}" Name="test weather" Description="Call this flow from Power Virtual Agents." xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <JsonFileName>/Workflows/testweather-91E77E75-A0F8-EC11-BB3D-002248233F82.json</JsonFileName>
   <Type>1</Type>
   <Subprocess>0</Subprocess>
   <Category>5</Category>
@@ -11,16 +11,17 @@
   <TriggerOnDelete>0</TriggerOnDelete>
   <AsyncAutodelete>0</AsyncAutodelete>
   <SyncWorkflowLogOnFailure>0</SyncWorkflowLogOnFailure>
-  <StateCode>0</StateCode>
-  <StatusCode>1</StatusCode>
+  <StateCode>1</StateCode>
+  <StatusCode>2</StatusCode>
   <RunAs>1</RunAs>
   <IsTransacted>1</IsTransacted>
   <IntroducedVersion>1.0.0.0</IntroducedVersion>
   <IsCustomizable>1</IsCustomizable>
+  <BusinessProcessType>0</BusinessProcessType>
   <IsCustomProcessingStepAllowedForOtherPublishers>1</IsCustomProcessingStepAllowedForOtherPublishers>
   <PrimaryEntity>none</PrimaryEntity>
   <LocalizedNames>
-    <LocalizedName languagecode="1033" description="Get Weather 2" />
+    <LocalizedName languagecode="1033" description="test weather" />
   </LocalizedNames>
   <Descriptions>
     <Description languagecode="1033" description="Call this flow from Power Virtual Agents." />
