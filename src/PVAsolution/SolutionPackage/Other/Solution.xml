@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ImportExportXml version="9.2.22054.150" SolutionPackageVersion="9.2" languagecode="1033" generatedBy="CrmLive" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+<ImportExportXml version="9.2.22061.180" SolutionPackageVersion="9.2" languagecode="1033" generatedBy="CrmLive" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   <SolutionManifest>
     <UniqueName>PVAsolution</UniqueName>
     <LocalizedNames>
@@ -79,6 +79,7 @@
     </Publisher>
     <RootComponents>
       <RootComponent type="29" id="{2487b01d-b6e8-ec11-bb3c-0022482792d7}" behavior="0" />
+      <RootComponent type="29" id="{91e77e75-a0f8-ec11-bb3d-002248233f82}" behavior="0" />
       <RootComponent type="29" id="{b7a7b57a-b6f5-ec11-bb3d-000d3a9b31f8}" behavior="0" />
     </RootComponents>
     <MissingDependencies />
