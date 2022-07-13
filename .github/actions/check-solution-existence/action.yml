@@ -61,10 +61,10 @@ runs:
         # Check if the solution unique name exists in the solution list
         for ($i=0; $i -lt $lines.Length; $i++) {
           while($lines[$i].Contains("  ")) { 
-            $lines[$i] = $lines[$i].Replace("  ", ";") 
+            $lines[$i] = $lines[$i].Replace("  ", " ") 
           }
-
-          $columns = $lines[$i] -split ";"
+          echo "line: $lines[$i]"
+          $columns = $lines[$i] -split " "
           echo "solution item: $columns[2]" 
           if ($columns[2] -eq "${{ inputs.solution_name }}") {
             $solution_exists = $true
