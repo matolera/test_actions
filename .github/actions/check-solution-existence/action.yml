@@ -33,22 +33,24 @@ runs:
     - uses: Firenza/secrets-to-env@v1.1.0
       with:
         secrets: ${{ inputs.secrets }}
-    - uses: nuget/setup-nuget@v1
-      with:
-        nuget-version: '5.x'
+
+    - name: set-pac-path
+      uses: ./.github/actions/set-pac-path
+
     - name: get-solutions-from-env
       id: get-solutions-from-env
       run: |
-        nuget install Microsoft.PowerApps.CLI -OutputDirectory pac
-        $nugetFolder = Get-ChildItem "pac" | Where-Object {$_.Name -match "Microsoft.PowerApps.CLI."}
-        $pacFolder = $nugetFolder.FullName + "\tools"
+        # nuget install Microsoft.PowerApps.CLI -OutputDirectory pac
+        # $nugetFolder = Get-ChildItem "pac" | Where-Object {$_.Name -match "Microsoft.PowerApps.CLI."}
+        # $pacFolder = $nugetFolder.FullName + "\tools"
 
         # Create a connection to the environment
         $environment_url = "${{ inputs.environment_url }}"
         $tenant_id = "${{ inputs.tenant_id }}"
         $client_id = "${{ inputs.client_id }}"
         $client_secret = "${{ inputs.client_secret }}"
-        & "$pacFolder\pac.exe" @("auth", "create", "--url", "$environment_url", "--tenant", "$tenant_id", "--applicationId", "$client_id", "--clientSecret", "$client_secret")
+        pac help
+        # & "$pacFolder\pac.exe" @("auth", "create", "--url", "$environment_url", "--tenant", "$tenant_id", "--applicationId", "$client_id", "--clientSecret", "$client_secret")
 
         # List all the solutions on the environment
         $result = & "$pacFolder\pac.exe" @("solution", "list")
