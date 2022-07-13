@@ -57,17 +57,14 @@ runs:
         $result = pac solution list
         $lines = $result | where{$_ -ne ""} | Select-Object -Skip 3
         $solution_exists = $false
-        echo "solution name: ${{ inputs.solution_name }}"
+        
         # Check if the solution unique name exists in the solution list
         for ($i=0; $i -lt $lines.Length; $i++) {
           while($lines[$i].Contains("  ")) { 
             $lines[$i] = $lines[$i].Replace("  ", " ") 
           }
 
-          echo "line: {0}" -f $lines[$i]
           $columns = $lines[$i] -split " "
-          echo "item: {0}" -f $columns[2]
-
           if ($columns[2] -eq "${{ inputs.solution_name }}") {
             $solution_exists = $true
             break
