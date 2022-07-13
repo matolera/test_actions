@@ -50,20 +50,19 @@ runs:
         $client_id = "${{ inputs.client_id }}"
         $client_secret = "${{ inputs.client_secret }}"
         pac auth create --url $environment_url --tenant $tenant_id --applicationId $client_id --clientSecret $client_secret
-        # & "$pacFolder\pac.exe" @("auth", "create", "--url", "$environment_url", "--tenant", "$tenant_id", "--applicationId", "$client_id", "--clientSecret", "$client_secret")
 
         # List all the solutions on the environment
-        # $result = & "$pacFolder\pac.exe" @("solution", "list")
-        # $lines = $result -split "`n"
+        $result = pac.exe solution list
+        $lines = $result -split "`n"
         $solution_exists = $false
 
         # Check if the solution unique name exists
-        # for ($i=5; $i -lt $lines.Length - 1; $i++) {
-        #    if ($lines[$i].Contains("${{ inputs.solution_name }}")) {
-        #        $solution_exists = $true
-        #        break
-        #    }
-        #}
+        for ($i=5; $i -lt $lines.Length - 1; $i++) {
+          if ($lines[$i].Contains("${{ inputs.solution_name }}")) {
+            $solution_exists = $true
+            break
+          }
+        }
 
         # Return the flag
         echo "::set-output name=solution_exists::$solution_exists"
