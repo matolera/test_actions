@@ -11,7 +11,7 @@ env:
 
 jobs:
   check-solution-existence:
-    runs-on: windows-2022
+    runs-on: ubuntu-latest
     environment: ${{ github.event.inputs.environment_name }}
     steps:
       - uses: actions/checkout@v2
