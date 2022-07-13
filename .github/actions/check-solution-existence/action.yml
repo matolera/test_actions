@@ -63,9 +63,11 @@ runs:
           while($lines[$i].Contains("  ")) { 
             $lines[$i] = $lines[$i].Replace("  ", " ") 
           }
-          echo "line: $lines[$i]"
+
+          echo "line: {0}" -f $lines[$i]
           $columns = $lines[$i] -split " "
-          echo "solution item: $columns[2]" 
+          echo "item: {0}" -f $columns[2]
+
           if ($columns[2] -eq "${{ inputs.solution_name }}") {
             $solution_exists = $true
             break
